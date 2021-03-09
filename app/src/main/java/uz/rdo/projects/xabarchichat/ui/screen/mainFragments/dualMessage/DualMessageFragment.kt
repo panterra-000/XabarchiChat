@@ -97,6 +97,7 @@ class DualMessageFragment : Fragment() {
                 isSeen = false
             )
             viewModel.sendMessage(messageModel)
+            binding.etMessage.setText("")
         }
     }
 

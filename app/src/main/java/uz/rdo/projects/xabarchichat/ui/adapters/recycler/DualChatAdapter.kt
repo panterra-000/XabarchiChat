@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.databinding.LeftChatItemBinding
 import uz.rdo.projects.xabarchichat.databinding.RightChatItemBinding
+import uz.rdo.projects.xabarchichat.utils.time.convertLongToTime
 
 class DualChatAdapter(private val myId: String) :
     RecyclerView.Adapter<DualChatAdapter.BaseViewHolder>() {
@@ -53,13 +54,22 @@ class DualChatAdapter(private val myId: String) :
     inner class SenderViewHolder(private val binding: RightChatItemBinding) :
         BaseViewHolder(binding.root) {
         override fun bind() {
+            binding.apply {
+                txtMessage.text = messages[adapterPosition].messageText
+                txtTimeOf.text = convertLongToTime(messages[adapterPosition].sendDate)
+            }
         }
     }
 
     inner class ReceiverViewHolder(private val binding: LeftChatItemBinding) :
         BaseViewHolder(binding.root) {
         override fun bind() {
-
+            binding.apply {
+                binding.apply {
+                    txtMessage.text = messages[adapterPosition].messageText
+                    txtTimeOf.text = convertLongToTime(messages[adapterPosition].sendDate)
+                }
+            }
         }
     }
 
