@@ -5,6 +5,7 @@ data class MessageModel(
     val messageText: String = "",
     val senderID: String = "",
     val receiverID: String = "",
-    val sendDate: String = "",
+    val sendDate: Long = 0L,
+    val imageMessageURL: String = "",
     val isSeen: Boolean = false
 )

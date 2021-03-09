@@ -58,7 +58,6 @@ class DualChatAdapter() :
     inner class SenderViewHolder(private val binding: RightChatItemBinding) :
         BaseViewHolder(binding.root) {
         override fun bind() {
-
         }
     }
 

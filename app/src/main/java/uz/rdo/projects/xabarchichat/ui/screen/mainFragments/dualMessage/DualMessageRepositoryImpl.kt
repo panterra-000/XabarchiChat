@@ -1,8 +1,12 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
+import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.data.repositories.DualMessageRepository
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import javax.inject.Inject
@@ -12,9 +16,79 @@ class DualMessageRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : DualMessageRepository {
 
+    override fun getAllMessages(
+        receiver: User,
+        allDualMessagesCallback: SingleBlock<List<MessageModel>>
+    ) {
+        val allMessages: ArrayList<MessageModel> = ArrayList()
 
-    override fun getAllMessages(allDualMessagesCallback: SingleBlock<List<MessageModel>>) {
+        val id = firebaseAuth.currentUser.uid
+        val refAllMessages =
+            firebaseDatabase.reference.child("ChatList").child(id).child(receiver.uid)
+                .child("Messages")
 
+        refAllMessages!!.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(allMessagesDb: DataSnapshot) {
+                allMessages.clear()
+                for (user_data_item in allMessagesDb.children) {
+
+                    val messageModel: MessageModel? =
+                        user_data_item.getValue(MessageModel::class.java)
+                    if (messageModel != null) {
+                        allMessages.add(messageModel)
+                    }
+                }
+                allDualMessagesCallback.invoke(allMessages)
+            }
+        })
+    }
+
+    override fun sendMessage(
+        messageModel: MessageModel,
+        isSentMessageCallback: SingleBlock<Boolean>
+    ) {
+
+        val messageIDKey = firebaseDatabase.reference.push().key
+
+        val messageHashMap = HashMap<String, Any?>()
+        messageHashMap["messageID"] = messageIDKey
+        messageHashMap["messageText"] = messageModel.messageText
+        messageHashMap["senderID"] = messageModel.senderID
+        messageHashMap["receiverID"] = messageModel.receiverID
+        messageHashMap["sendDate"] = messageModel.sendDate
+        messageHashMap["imageMessageURL"] = messageModel.imageMessageURL
+        messageHashMap["isSeen"] = messageModel.isSeen
+
+        firebaseDatabase.reference.child("ChatList").child(messageModel.senderID)
+            .child(messageModel.receiverID)
+            .child("Messages").child(messageIDKey!!).setValue(messageHashMap)
+            .addOnCompleteListener { addToSChList ->
+                if (addToSChList.isSuccessful) {
+                    firebaseDatabase.reference.child("ChatList").child(messageModel.receiverID)
+                        .child(messageModel.senderID)
+                        .child("Messages").child(messageIDKey!!).setValue(messageHashMap)
+                        .addOnCompleteListener { addToRChList ->
+                            if (addToRChList.isSuccessful) {
+                                isSentMessageCallback.invoke(true)
+                            } else {
+                                isSentMessageCallback.invoke(false)
+                            }
+                        }
+                } else {
+                    isSentMessageCallback.invoke(false)
+                }
+            }
+
+    }
+
+    override fun deleteMessage(
+        messageModel: MessageModel,
+        isDeletedMessageCallback: SingleBlock<Boolean>
+    ) {
+        TODO("Not yet implemented")
     }
 
 }

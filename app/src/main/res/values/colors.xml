@@ -2,7 +2,8 @@
 <resources>
     <!--Background colors-->
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
     <color name="main_light_grey">#F7F7F7</color>
     <color name="main_dark_grey">#959595</color>
