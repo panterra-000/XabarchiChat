@@ -56,6 +56,8 @@ class DualMessageFragment : Fragment() {
 
     private val allMessagesObserver = Observer<List<MessageModel>> { messages ->
         adapter.submitMessages(messages)
+        binding.rvMessage.scrollToPosition(adapter.itemCount - 1)
+
     }
 
     private val isSendMessageObserver = Observer<Boolean> { isSend ->
@@ -66,6 +68,7 @@ class DualMessageFragment : Fragment() {
 
 
     private fun loadViews() {
+
         binding.apply {
             txtNameReceiver.text = args.receiverContact.username
             txtLastSeenTime.text = args.receiverContact.lastSeenTime.toString()
@@ -73,6 +76,7 @@ class DualMessageFragment : Fragment() {
             adapter.submitMessages(listOf())
             binding.rvMessage.layoutManager = LinearLayoutManager(requireContext())
             binding.rvMessage.adapter = adapter
+
         }
     }
 
@@ -100,5 +104,7 @@ class DualMessageFragment : Fragment() {
             binding.etMessage.setText("")
         }
     }
+
+
 
 }
