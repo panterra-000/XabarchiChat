@@ -24,7 +24,18 @@
     <color name="text_main">#000000</color>
     <color name="text_grey">#8E8E93</color>
     <color name="text_blue">#007EE5</color>
+    <color name="text_dark_blue">#041C30</color>
     <color name="text_green">#2DA32F</color>
+
+
+    <color name="leftChatStartColorTR">#66BB1BDF</color>
+    <color name="leftChatCenterColorTR">#668932C6</color>
+    <color name="leftChatEndColorTR">#66242DDF</color>
+
+
+    <color name="rightChatCenterColorTR">#6632C6B5</color>
+    <color name="rightChatEndColorTR">#6649AE96</color>
+    <color name="rightChatStartColorTR">#663AEAD6</color>
 
 
 </resources>

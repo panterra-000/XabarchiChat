@@ -4,6 +4,7 @@
  <dimen name="txt_main_size">18sp</dimen>
  <dimen name="txt_middle_size">16sp</dimen>
  <dimen name="txt_title_name_size">14sp</dimen>
+ <dimen name="txt_chat_text_size">14sp</dimen>
  <dimen name="txt_message_size">16sp</dimen>
  <dimen name="txt_time_size">12sp</dimen>
  <dimen name="txt_min_size">12sp</dimen>
