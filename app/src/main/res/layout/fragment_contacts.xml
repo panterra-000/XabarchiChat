@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_light_grey"
+    tools:context=".ui.screen.mainFragments.contacts.ContactsFragment">
+
+    <View
+        android:id="@+id/tool_bar_panel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/main_light_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_add"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="20dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        app:layout_constraintBottom_toBottomOf="@+id/tool_bar_panel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tool_bar_panel" />
+
+    <TextView
+        android:id="@+id/txt_toolbar_title"
+        style="@style/toolbar_title_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contacts"
+        app:layout_constraintBottom_toBottomOf="@+id/tool_bar_panel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_search"
+        style="@style/et_search_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/edit_text_back"
+        android:clickable="false"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:focusable="false"
+        android:gravity="left"
+        android:hint="@string/search"
+        android:paddingStart="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool_bar_panel" />
+
+    <View
+        android:id="@+id/line_bar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_search" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line_bar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/spn_filter_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_location"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spn_filter_contacts" />
+
+
+            <TextView
+                android:id="@+id/btn_find_people_near"
+                style="@style/blue_contacts_text_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="0dp"
+                android:text="@string/find_people_near"
+                app:layout_constraintBottom_toBottomOf="@+id/img_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_location"
+                app:layout_constraintTop_toTopOf="@+id/img_location" />
+
+            <View
+                android:id="@+id/l1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/main_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/btn_find_people_near"
+                app:layout_constraintTop_toBottomOf="@+id/btn_find_people_near" />
+
+            <ImageView
+                android:id="@+id/img_add_person"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:paddingLeft="-8.5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:src="@drawable/ic_add_person"
+                app:layout_constraintEnd_toEndOf="@+id/img_location"
+                app:layout_constraintStart_toStartOf="@+id/img_location"
+                app:layout_constraintTop_toBottomOf="@+id/l1" />
+
+
+            <TextView
+                android:id="@+id/btn_to_invite"
+                style="@style/blue_contacts_text_style"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingStart="0dp"
+                android:text="@string/to_invite_person"
+                app:layout_constraintBottom_toBottomOf="@+id/img_add_person"
+                app:layout_constraintStart_toStartOf="@+id/btn_find_people_near"
+                app:layout_constraintTop_toTopOf="@id/img_add_person" />
+
+            <View
+                android:id="@+id/l2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/main_grey"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/btn_to_invite"
+                app:layout_constraintTop_toBottomOf="@+id/btn_to_invite" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_persons"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/l2"
+                tools:itemCount="18"
+                tools:listitem="@layout/item_contact" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

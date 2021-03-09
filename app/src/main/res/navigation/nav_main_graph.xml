@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main_graph"
+    app:startDestination="@id/chatsFragment">
+
+    <fragment
+        android:id="@+id/callsFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.calls.CallsFragment"
+        android:label="fragment_calls"
+        tools:layout="@layout/fragment_calls" />
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chats.ChatsFragment"
+        android:label="fragment_chats"
+        tools:layout="@layout/fragment_chats" />
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.contacts.ContactsFragment"
+        android:label="fragment_contacts"
+        tools:layout="@layout/fragment_contacts">
+        <action
+            android:id="@+id/action_contactsFragment_to_allUsersFragment"
+            app:destination="@id/allUsersFragment" />
+        <action
+            android:id="@+id/action_contactsFragment_to_dualMessageFragment"
+            app:destination="@id/dualMessageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/allUsersFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.allUsersFragment.AllUsersFragment"
+        android:label="fragment_all_users"
+        tools:layout="@layout/fragment_all_users" />
+    <fragment
+        android:id="@+id/dualMessageFragment"
+        android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage.DualMessageFragment"
+        android:label="fragment_dual_message"
+        tools:layout="@layout/fragment_dual_message">
+
+    </fragment>
+</navigation>
