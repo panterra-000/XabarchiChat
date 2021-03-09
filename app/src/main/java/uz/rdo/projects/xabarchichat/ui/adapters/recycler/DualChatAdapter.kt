@@ -4,18 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.databinding.LeftChatItemBinding
 import uz.rdo.projects.xabarchichat.databinding.RightChatItemBinding
-import javax.inject.Inject
 
-class DualChatAdapter() :
+class DualChatAdapter(private val myId: String) :
     RecyclerView.Adapter<DualChatAdapter.BaseViewHolder>() {
     var messages: ArrayList<MessageModel> = ArrayList()
-
-    @Inject
-    lateinit var storage: LocalStorage
 
     companion object {
         private const val TYPE_SENDER = 0
@@ -26,7 +21,7 @@ class DualChatAdapter() :
     override fun getItemViewType(position: Int): Int {
         val id = messages[position].senderID
         return when (id) {
-            storage.firebaseID -> TYPE_SENDER
+            myId -> TYPE_SENDER
             else -> TYPE_RECEIVER
         }
     }

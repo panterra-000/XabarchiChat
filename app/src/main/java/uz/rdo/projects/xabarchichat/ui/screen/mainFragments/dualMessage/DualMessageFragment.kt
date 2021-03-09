@@ -69,7 +69,7 @@ class DualMessageFragment : Fragment() {
         binding.apply {
             txtNameReceiver.text = args.receiverContact.username
             txtLastSeenTime.text = args.receiverContact.lastSeenTime.toString()
-            adapter = DualChatAdapter()
+            adapter = DualChatAdapter(storage.firebaseID)
             adapter.submitMessages(listOf())
             binding.rvMessage.layoutManager = LinearLayoutManager(requireContext())
             binding.rvMessage.adapter = adapter
