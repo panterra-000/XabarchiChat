@@ -11,6 +11,7 @@ import uz.rdo.projects.xabarchichat.ui.screen.entryFragments.signIn.SignInReposi
 import uz.rdo.projects.xabarchichat.ui.screen.entryFragments.signUp.SignUpRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.allUsersFragment.AllUsersRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.contacts.ContactsRepositoryImpl
+import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage.DualMessageRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.settings.SettingsRepositoryImpl
 import javax.inject.Singleton
 
@@ -45,6 +46,11 @@ interface RepositoryModule {
 
     @Binds
     @Singleton
+    fun getDualMessageRepository(repository: DualMessageRepositoryImpl): DualMessageRepository
+
+    @Binds
+    @Singleton
     fun getSettingsRepository(repository: SettingsRepositoryImpl): SettingsRepository
+
 
 }
