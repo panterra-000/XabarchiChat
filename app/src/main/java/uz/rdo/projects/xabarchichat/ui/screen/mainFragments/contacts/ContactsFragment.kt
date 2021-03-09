@@ -98,8 +98,12 @@ class ContactsFragment : Fragment() {
         }
 
         adapter.contactClickCallback { contact ->
-            val receiverContact = contact
-            findNavController().navigate(R.id.action_contactsFragment_to_dualMessageFragment)
+            var receiverContact = contact
+            val action =
+                ContactsFragmentDirections.actionContactsFragmentToDualMessageFragment(
+                    receiverContact
+                )
+            findNavController().navigate(action)
             (requireActivity() as MainActivity).binding.bottomMenuNav.hideView()
         }
     }

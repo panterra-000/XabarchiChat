@@ -1,5 +1,7 @@
 package uz.rdo.projects.xabarchichat.data.models
 
+import java.io.Serializable
+
 data class User(
     var bioText: String = "",
     var email: String = "",
@@ -9,4 +11,4 @@ data class User(
     var search: String = "",
     var uid: String = "",
     var username: String = ""
-)
+) : Serializable

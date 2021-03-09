@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 
 class DualMessageFragment : Fragment() {
 
     lateinit var binding: FragmentDualMessageBinding
+
+    val args: DualMessageFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -18,4 +21,17 @@ class DualMessageFragment : Fragment() {
         binding = FragmentDualMessageBinding.inflate(layoutInflater)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadViews()
+
+    }
+
+    private fun loadViews() {
+        binding.apply {
+            txtNameReceiver.text = args.receiverContact.username
+            txtLastSeenTime.text = args.receiverContact.lastSeenTime.toString()
+        }
+    }
+
 }

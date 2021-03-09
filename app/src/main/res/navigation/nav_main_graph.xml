@@ -27,6 +27,7 @@
             android:id="@+id/action_contactsFragment_to_dualMessageFragment"
             app:destination="@id/dualMessageFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.settings.SettingsFragment"
@@ -43,5 +44,8 @@
         android:label="fragment_dual_message"
         tools:layout="@layout/fragment_dual_message">
 
+        <argument
+            android:name="receiverContact"
+            app:argType="uz.rdo.projects.xabarchichat.data.models.User" />
     </fragment>
 </navigation>
