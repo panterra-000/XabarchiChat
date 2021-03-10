@@ -14,6 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
+import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.DualChatAdapter
 import uz.rdo.projects.xabarchichat.utils.extensions.showToast
@@ -30,7 +31,7 @@ class DualMessageFragment : Fragment() {
     lateinit var storage: LocalStorage
 
     private val viewModel: DualMessageViewModel by viewModels()
-
+    lateinit var myFirebaseUser: User
     val args: DualMessageFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -49,9 +50,17 @@ class DualMessageFragment : Fragment() {
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun loadObservers() {
+        viewModel.getFirebaseUser()
         viewModel.getAllMessages(args.receiverContact)
+        viewModel.firebaseUserData.observe(this, firebaseUserDataObserver)
         viewModel.allMessages.observe(this, allMessagesObserver)
         viewModel.isSendMessage.observe(this, isSendMessageObserver)
+    }
+
+    private val firebaseUserDataObserver = Observer<User> { firebaseUser ->
+        if (firebaseUser != null) {
+            myFirebaseUser = firebaseUser
+        }
     }
 
     private val allMessagesObserver = Observer<List<MessageModel>> { messages ->
@@ -100,11 +109,10 @@ class DualMessageFragment : Fragment() {
                 sendDate = getCurrentDateTime(),
                 isSeen = false
             )
-            viewModel.sendMessage(messageModel)
+            viewModel.sendMessage(messageModel = messageModel, receiverUser = args.receiverContact)
             binding.etMessage.setText("")
         }
     }
-
 
 
 }

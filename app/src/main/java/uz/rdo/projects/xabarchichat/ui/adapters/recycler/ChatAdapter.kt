@@ -24,7 +24,7 @@ class ChatAdapter(
         fun bind() = bindItem {
             binding.apply {
                 val chat = chats[adapterPosition]
-                txtReceiverName.text = chat.receiver.username
+                txtReceiverName.text = chat.receiverUser.username
                 txtLastMessage.text = chat.messageModel.messageText
 
                 if (chat.messageModel.isSeen) {
@@ -33,13 +33,13 @@ class ChatAdapter(
                     imgIsSeen.setImageResource(R.drawable.ic_sent)
                 }
 
-                if (chat.messageModel.senderID == chat.myID) {
+                if (chat.messageModel.senderID == chat.senderUser.uid) {
                     imgIsSeen.showView()
                 } else {
                     imgIsSeen.hideView()
                 }
 
-                if (chat.receiver.status == "online") {
+                if (chat.receiverUser.status == "online") {
                     viewOnlineStatus.setBackgroundResource(R.drawable.online_back)
                 } else {
                     viewOnlineStatus.setBackgroundResource(R.drawable.offline_back)

@@ -2,7 +2,7 @@ package uz.rdo.projects.xabarchichat.data.models
 
 data class ChatModel(
     val chatId: String = "",
-    val myID: String = "",
-    val receiver: User,
+    val senderUser: User,
+    val receiverUser: User,
     val messageModel: MessageModel
 )

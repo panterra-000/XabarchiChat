@@ -18,6 +18,26 @@ class DualMessageRepositoryImpl @Inject constructor(
     private val storage: LocalStorage
 ) : DualMessageRepository {
 
+    lateinit var myFirebaseUser: User
+
+    override fun getFirebaseUser(getFirebaseUserCallback: SingleBlock<User>?) {
+        val refFirebaseUser =
+            firebaseDatabase.reference.child("Users").child(storage.firebaseID)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val user = snapshot.getValue(User::class.java)
+                        if (user != null) {
+                            myFirebaseUser = user
+                            getFirebaseUserCallback?.invoke(user)
+                        }
+                    }
+                })
+    }
+
+
     override fun getAllMessages(
         receiver: User,
         allDualMessagesCallback: SingleBlock<List<MessageModel>>
@@ -50,6 +70,7 @@ class DualMessageRepositoryImpl @Inject constructor(
 
     override fun sendMessage(
         messageModel: MessageModel,
+        receiverUser: User,
         isSentMessageCallback: SingleBlock<Boolean>
     ) {
 
@@ -74,9 +95,30 @@ class DualMessageRepositoryImpl @Inject constructor(
                         .child("Messages").child(messageIDKey!!).setValue(messageHashMap)
                         .addOnCompleteListener { addToRChList ->
                             if (addToRChList.isSuccessful) {
-                                isSentMessageCallback.invoke(true)
 
+                                val chatId = firebaseDatabase.reference.push().key
 
+                                val chatHashMap = HashMap<String, Any?>()
+                                chatHashMap["chatId"] = chatId
+                                chatHashMap["senderUser"] = myFirebaseUser
+                                chatHashMap["receiverUser"] = receiverUser
+                                chatHashMap["messageModel"] = messageModel
+
+                                firebaseDatabase.reference.child("PersonalChats")
+                                    .child(storage.firebaseID).child(receiverUser.uid)
+                                    .setValue(chatHashMap)
+                                    .addOnCompleteListener {
+                                        if (it.isSuccessful) {
+                                            firebaseDatabase.reference.child("PersonalChats")
+                                                .child(receiverUser.uid).child(storage.firebaseID)
+                                                .setValue(chatHashMap)
+                                                .addOnCompleteListener { taskChat ->
+                                                    if (taskChat.isSuccessful) {
+                                                        isSentMessageCallback.invoke(true)
+                                                    }
+                                                }
+                                        }
+                                    }
 
                             } else {
                                 isSentMessageCallback.invoke(false)

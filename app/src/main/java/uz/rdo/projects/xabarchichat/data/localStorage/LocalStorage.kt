@@ -1,6 +1,7 @@
 package uz.rdo.projects.xabarchichat.data.localStorage
 
 import android.content.Context
+import uz.rdo.projects.xabarchichat.data.models.User
 
 class LocalStorage private constructor(context: Context) {
     companion object {
@@ -20,6 +21,7 @@ class LocalStorage private constructor(context: Context) {
 
     var isFirst: Boolean by BooleanPreference(pref, true)
     var firebaseID: String by StringPreference(pref, "none")
+
 
     fun clear() {
         pref.edit().clear().apply()
