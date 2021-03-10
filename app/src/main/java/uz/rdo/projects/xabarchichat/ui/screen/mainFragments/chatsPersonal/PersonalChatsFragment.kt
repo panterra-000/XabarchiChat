@@ -2,24 +2,28 @@ package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chatsPersonal
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.databinding.FragmentPersonalChatsBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.ChatAdapter
-import uz.rdo.projects.xabarchichat.ui.adapters.recycler.ContactsAdapter
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PersonalChatsFragment : Fragment() {
 
     lateinit var binding: FragmentPersonalChatsBinding
     lateinit var adapter: ChatAdapter
+
+    @Inject
+    lateinit var storage: LocalStorage
 
     private val viewModel: PersonalChatsViewModel by viewModels()
 
@@ -47,7 +51,7 @@ class PersonalChatsFragment : Fragment() {
     }
 
     private fun loadViews() {
-        adapter = ChatAdapter()
+        adapter = ChatAdapter(storage.firebaseID)
         adapter.submitChats(listOf())
         binding.rvChat.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChat.adapter = adapter

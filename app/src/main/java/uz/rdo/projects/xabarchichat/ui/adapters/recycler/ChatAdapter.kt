@@ -12,6 +12,7 @@ import uz.rdo.projects.xabarchichat.utils.extensions.hideView
 import uz.rdo.projects.xabarchichat.utils.extensions.showView
 
 class ChatAdapter(
+    private val myID: String
 ) :
     RecyclerView.Adapter<ChatAdapter.ChatHolder>() {
 
@@ -33,7 +34,7 @@ class ChatAdapter(
                     imgIsSeen.setImageResource(R.drawable.ic_sent)
                 }
 
-                if (chat.messageModel!!.senderID == chat.senderUser!!.uid) {
+                if (chat.messageModel!!.senderID == myID) {
                     imgIsSeen.showView()
                 } else {
                     imgIsSeen.hideView()

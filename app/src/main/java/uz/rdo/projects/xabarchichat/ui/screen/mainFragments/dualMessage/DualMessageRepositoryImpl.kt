@@ -46,7 +46,7 @@ class DualMessageRepositoryImpl @Inject constructor(
 
         val id = storage.firebaseID
         val refAllMessages =
-            firebaseDatabase.reference.child("ChatList").child(id).child(receiver.uid)
+            firebaseDatabase.reference.child("MessageList").child(id).child(receiver.uid)
                 .child("Messages")
 
         refAllMessages!!.addValueEventListener(object : ValueEventListener {
@@ -85,12 +85,12 @@ class DualMessageRepositoryImpl @Inject constructor(
         messageHashMap["imageMessageURL"] = messageModel.imageMessageURL
         messageHashMap["isSeen"] = messageModel.isSeen
 
-        firebaseDatabase.reference.child("ChatList").child(messageModel.senderID)
+        firebaseDatabase.reference.child("MessageList").child(messageModel.senderID)
             .child(messageModel.receiverID)
             .child("Messages").child(messageIDKey!!).setValue(messageHashMap)
             .addOnCompleteListener { addToSChList ->
                 if (addToSChList.isSuccessful) {
-                    firebaseDatabase.reference.child("ChatList").child(messageModel.receiverID)
+                    firebaseDatabase.reference.child("MessageList").child(messageModel.receiverID)
                         .child(messageModel.senderID)
                         .child("Messages").child(messageIDKey!!).setValue(messageHashMap)
                         .addOnCompleteListener { addToRChList ->
