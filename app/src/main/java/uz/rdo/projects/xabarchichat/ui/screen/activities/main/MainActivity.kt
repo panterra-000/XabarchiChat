@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         loadViews()
     }
 
@@ -27,9 +26,5 @@ class MainActivity : AppCompatActivity() {
         binding.bottomMenuNav.setupWithNavController(navController)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        FirebaseAuth.getInstance().signOut()
-    }
 
 }

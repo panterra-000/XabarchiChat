@@ -39,4 +39,7 @@ class PersonalChatsFragment : Fragment() {
         binding.rvChat.adapter = adapter
     }
 
+
+
+
 }
