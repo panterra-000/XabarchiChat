@@ -8,12 +8,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.databinding.FragmentPersonalChatsBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.ChatAdapter
+import uz.rdo.projects.xabarchichat.ui.screen.activities.main.MainActivity
+import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chats.ChatsFragmentDirections
+import uz.rdo.projects.xabarchichat.utils.extensions.hideView
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -55,6 +59,19 @@ class PersonalChatsFragment : Fragment() {
         adapter.submitChats(listOf())
         binding.rvChat.layoutManager = LinearLayoutManager(requireContext())
         binding.rvChat.adapter = adapter
+
+        adapter.contactClickCallback { chatModel ->
+            if (chatModel.receiverUser != null) {
+                findNavController().navigate(
+                    ChatsFragmentDirections.actionChatsFragmentToDualMessageFragment(
+                        chatModel.receiverUser
+                    )
+                )
+                (requireActivity() as MainActivity).binding.bottomMenuNav.hideView()
+
+            }
+        }
+
     }
 
 

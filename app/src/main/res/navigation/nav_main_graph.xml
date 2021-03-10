@@ -14,7 +14,11 @@
         android:id="@+id/chatsFragment"
         android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chats.ChatsFragment"
         android:label="fragment_chats"
-        tools:layout="@layout/fragment_chats" />
+        tools:layout="@layout/fragment_chats" >
+        <action
+            android:id="@+id/action_chatsFragment_to_dualMessageFragment"
+            app:destination="@id/dualMessageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/contactsFragment"
         android:name="uz.rdo.projects.xabarchichat.ui.screen.mainFragments.contacts.ContactsFragment"

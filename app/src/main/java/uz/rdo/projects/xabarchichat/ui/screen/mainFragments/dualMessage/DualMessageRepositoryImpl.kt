@@ -37,7 +37,6 @@ class DualMessageRepositoryImpl @Inject constructor(
                 })
     }
 
-
     override fun getAllMessages(
         receiver: User,
         allDualMessagesCallback: SingleBlock<List<MessageModel>>
@@ -109,9 +108,16 @@ class DualMessageRepositoryImpl @Inject constructor(
                                     .setValue(chatHashMap)
                                     .addOnCompleteListener {
                                         if (it.isSuccessful) {
+
+                                            val chatSecondHashMap = HashMap<String, Any?>()
+                                            chatSecondHashMap["chatId"] = chatId
+                                            chatSecondHashMap["receiverUser"] = myFirebaseUser
+                                            chatSecondHashMap["senderUser"] = receiverUser
+                                            chatSecondHashMap["messageModel"] = messageModel
+
                                             firebaseDatabase.reference.child("PersonalChats")
                                                 .child(receiverUser.uid).child(storage.firebaseID)
-                                                .setValue(chatHashMap)
+                                                .setValue(chatSecondHashMap)
                                                 .addOnCompleteListener { taskChat ->
                                                     if (taskChat.isSuccessful) {
                                                         isSentMessageCallback.invoke(true)
@@ -128,7 +134,6 @@ class DualMessageRepositoryImpl @Inject constructor(
                     isSentMessageCallback.invoke(false)
                 }
             }
-
     }
 
     override fun deleteMessage(

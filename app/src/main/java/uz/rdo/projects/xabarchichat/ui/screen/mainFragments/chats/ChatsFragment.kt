@@ -10,6 +10,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import uz.rdo.projects.xabarchichat.databinding.FragmentChatsBinding
 import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.ui.adapters.viewPager.ViewPagerAdapter
+import uz.rdo.projects.xabarchichat.ui.screen.activities.main.MainActivity
+import uz.rdo.projects.xabarchichat.utils.extensions.hideView
+import uz.rdo.projects.xabarchichat.utils.extensions.showView
 
 
 class ChatsFragment : Fragment() {
@@ -26,6 +29,7 @@ class ChatsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (requireActivity() as MainActivity).binding.bottomMenuNav.showView()
         loadViews()
     }
 
