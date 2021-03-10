@@ -18,4 +18,23 @@ class PersonalChatsFragment : Fragment() {
         binding = FragmentPersonalChatsBinding.inflate(layoutInflater)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadViews()
+        loadObservers()
+
+    }
+
+    private fun loadObservers() {
+
+
+    }
+
+    private fun loadViews() {
+
+
+
+    }
+
+
 }

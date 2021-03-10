@@ -4,5 +4,5 @@ data class ChatModel(
     val chatId: String = "",
     val senderId: String = "",
     val receiverId: String = "",
-    val lastMessage: String = ""
+    val lastMessage: MessageModel? = null,
 )

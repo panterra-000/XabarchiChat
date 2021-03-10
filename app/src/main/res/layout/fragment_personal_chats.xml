@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".ui.screen.mainFragments.chatsPersonal.PersonalChatsFragment">
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_chat"
         android:layout_width="match_parent"
-        tools:listitem="@layout/item_contact"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_chat" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
