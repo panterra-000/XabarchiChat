@@ -63,6 +63,12 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="txt_last_message">
+        <item name="android:textSize">@dimen/txt_last_message_size</item>
+        <item name="android:textColor">@color/text_dark_grey</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <style name="reset_password_text_style">
         <item name="android:textSize">@dimen/txt_middle_size</item>
         <item name="android:textColor">@color/white</item>

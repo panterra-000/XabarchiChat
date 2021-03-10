@@ -75,6 +75,9 @@ class DualMessageRepositoryImpl @Inject constructor(
                         .addOnCompleteListener { addToRChList ->
                             if (addToRChList.isSuccessful) {
                                 isSentMessageCallback.invoke(true)
+
+
+
                             } else {
                                 isSentMessageCallback.invoke(false)
                             }
