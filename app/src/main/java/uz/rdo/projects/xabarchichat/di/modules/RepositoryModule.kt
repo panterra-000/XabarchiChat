@@ -10,6 +10,7 @@ import uz.rdo.projects.xabarchichat.ui.screen.activities.main.MainRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.entryFragments.signIn.SignInRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.entryFragments.signUp.SignUpRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.allUsersFragment.AllUsersRepositoryImpl
+import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chatsPersonal.PersonalChatsRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.contacts.ContactsRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage.DualMessageRepositoryImpl
 import uz.rdo.projects.xabarchichat.ui.screen.mainFragments.settings.SettingsRepositoryImpl
@@ -51,6 +52,10 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun getSettingsRepository(repository: SettingsRepositoryImpl): SettingsRepository
+
+    @Binds
+    @Singleton
+    fun getPersonalChatsRepository(repository: PersonalChatsRepositoryImpl): PersonalChatsRepository
 
 
 }

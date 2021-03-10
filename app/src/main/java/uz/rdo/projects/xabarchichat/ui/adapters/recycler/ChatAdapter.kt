@@ -24,22 +24,22 @@ class ChatAdapter(
         fun bind() = bindItem {
             binding.apply {
                 val chat = chats[adapterPosition]
-                txtReceiverName.text = chat.receiverUser.username
-                txtLastMessage.text = chat.messageModel.messageText
+                txtReceiverName.text = chat.receiverUser!!.username
+                txtLastMessage.text = chat.messageModel!!.messageText
 
-                if (chat.messageModel.isSeen) {
+                if (chat.messageModel!!.isSeen) {
                     imgIsSeen.setImageResource(R.drawable.ic_all_read)
                 } else {
                     imgIsSeen.setImageResource(R.drawable.ic_sent)
                 }
 
-                if (chat.messageModel.senderID == chat.senderUser.uid) {
+                if (chat.messageModel!!.senderID == chat.senderUser!!.uid) {
                     imgIsSeen.showView()
                 } else {
                     imgIsSeen.hideView()
                 }
 
-                if (chat.receiverUser.status == "online") {
+                if (chat.receiverUser!!.status == "online") {
                     viewOnlineStatus.setBackgroundResource(R.drawable.online_back)
                 } else {
                     viewOnlineStatus.setBackgroundResource(R.drawable.offline_back)
@@ -59,7 +59,7 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: ChatHolder, position: Int) = holder.bind()
 
-    fun submitContacts(_chats: List<ChatModel>) {
+    fun submitChats(_chats: List<ChatModel>) {
         chats.clear()
         chats.addAll(_chats)
         notifyDataSetChanged()
