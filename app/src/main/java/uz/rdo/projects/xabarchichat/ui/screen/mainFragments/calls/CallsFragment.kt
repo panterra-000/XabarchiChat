@@ -10,13 +10,22 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import dagger.hilt.android.AndroidEntryPoint
+import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentCallsBinding
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class CallsFragment : Fragment() {
 
     lateinit var binding: FragmentCallsBinding
+
+    @Inject
+    lateinit var storage: LocalStorage
+
+    @Inject
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +42,9 @@ class CallsFragment : Fragment() {
 
     private fun loadViews() {
 
-        var firebaseUser = FirebaseAuth.getInstance().currentUser
 
         var refUser = FirebaseDatabase.getInstance().reference
-            .child("Users").child(firebaseUser!!.uid)
+            .child("Users").child(storage.firebaseID)
 
         //   binding.txtFbUser.text = "${firebaseUser.uid}"
 

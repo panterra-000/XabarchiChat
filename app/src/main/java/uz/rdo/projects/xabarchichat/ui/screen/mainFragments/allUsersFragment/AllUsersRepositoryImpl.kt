@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.data.repositories.AllUsersRepository
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 class AllUsersRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val storage: LocalStorage
 ) : AllUsersRepository {
 
     override fun getAllUsers(allUsersCallback: SingleBlock<List<User>>) {
@@ -30,7 +32,7 @@ class AllUsersRepositoryImpl @Inject constructor(
                 for (user_data_item in allusersDatabase.children) {
 
                     val user: User? = user_data_item.getValue(User::class.java)
-                    if (user!!.uid != firebaseAuth.currentUser!!.uid) {
+                    if (user!!.uid != storage.firebaseID) {
                         allContactList.add(user)
                     }
                 }

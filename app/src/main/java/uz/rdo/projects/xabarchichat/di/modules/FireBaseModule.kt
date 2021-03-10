@@ -14,13 +14,12 @@ import javax.inject.Singleton
 class FireBaseModule {
     private val database = FirebaseDatabase.getInstance()
     private val dbRootRef = database.reference
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private val userNode = dbRootRef.child("Users")
 
     @Provides
     @Singleton
     fun getFireAuthModule(): FirebaseAuth {
-        return this.mAuth
+        return FirebaseAuth.getInstance()
     }
 
     @Provides
