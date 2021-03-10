@@ -3,6 +3,7 @@ package uz.rdo.projects.xabarchichat.ui.adapters.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.databinding.ItemChatBinding
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
@@ -21,8 +22,21 @@ class ChatAdapter(
         fun bind() = bindItem {
             binding.apply {
                 val chat = chats[adapterPosition]
+                binding.apply {
+                    txtReceiverName.text = chat.receiver.username
+                    txtLastMessage.text = chat.messageModel.messageText
+                    if (chat.messageModel.isSeen) {
+                        imgIsSeen.setImageResource(R.drawable.ic_all_read)
+                    } else {
+                        imgIsSeen.setImageResource(R.drawable.ic_sent)
+                    }
+                }
 
-
+                if (chat.receiver.status == "online") {
+                    viewOnlineStatus.setBackgroundResource(R.drawable.online_back)
+                } else {
+                    viewOnlineStatus.setBackgroundResource(R.drawable.offline_back)
+                }
 
                 root.setOnClickListener {
                     listenContactClick?.invoke(chat)
