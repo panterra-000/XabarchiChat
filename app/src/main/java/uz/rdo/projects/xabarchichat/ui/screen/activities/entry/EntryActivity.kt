@@ -19,5 +19,4 @@ class EntryActivity : AppCompatActivity() {
         binding = ActivityEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
-
 }

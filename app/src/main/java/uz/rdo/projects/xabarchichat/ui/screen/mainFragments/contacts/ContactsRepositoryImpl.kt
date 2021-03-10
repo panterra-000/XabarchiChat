@@ -20,7 +20,7 @@ class ContactsRepositoryImpl @Inject constructor(
 
     override fun getContacts(contactsCallback: SingleBlock<List<User>>) {
         val refContacts =
-            firebaseDatabase.reference.child("ContactList").child(firebaseAuth.currentUser!!.uid)
+            firebaseDatabase.reference.child("ContactList").child(storage.firebaseID)
 
         val contactList: ArrayList<User> = ArrayList()
 

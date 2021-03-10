@@ -5,6 +5,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.data.repositories.DualMessageRepository
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class DualMessageRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val storage: LocalStorage
 ) : DualMessageRepository {
 
     override fun getAllMessages(
@@ -22,7 +24,7 @@ class DualMessageRepositoryImpl @Inject constructor(
     ) {
         val allMessages: ArrayList<MessageModel> = ArrayList()
 
-        val id = firebaseAuth.currentUser.uid
+        val id = storage.firebaseID
         val refAllMessages =
             firebaseDatabase.reference.child("ChatList").child(id).child(receiver.uid)
                 .child("Messages")
