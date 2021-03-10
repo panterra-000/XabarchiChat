@@ -8,6 +8,8 @@ import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.databinding.ItemChatBinding
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import uz.rdo.projects.xabarchichat.utils.extensions.bindItem
+import uz.rdo.projects.xabarchichat.utils.extensions.hideView
+import uz.rdo.projects.xabarchichat.utils.extensions.showView
 
 class ChatAdapter(
 ) :
@@ -22,14 +24,19 @@ class ChatAdapter(
         fun bind() = bindItem {
             binding.apply {
                 val chat = chats[adapterPosition]
-                binding.apply {
-                    txtReceiverName.text = chat.receiver.username
-                    txtLastMessage.text = chat.messageModel.messageText
-                    if (chat.messageModel.isSeen) {
-                        imgIsSeen.setImageResource(R.drawable.ic_all_read)
-                    } else {
-                        imgIsSeen.setImageResource(R.drawable.ic_sent)
-                    }
+                txtReceiverName.text = chat.receiver.username
+                txtLastMessage.text = chat.messageModel.messageText
+
+                if (chat.messageModel.isSeen) {
+                    imgIsSeen.setImageResource(R.drawable.ic_all_read)
+                } else {
+                    imgIsSeen.setImageResource(R.drawable.ic_sent)
+                }
+
+                if (chat.messageModel.senderID == chat.myID) {
+                    imgIsSeen.showView()
+                } else {
+                    imgIsSeen.hideView()
                 }
 
                 if (chat.receiver.status == "online") {
@@ -37,7 +44,6 @@ class ChatAdapter(
                 } else {
                     viewOnlineStatus.setBackgroundResource(R.drawable.offline_back)
                 }
-
                 root.setOnClickListener {
                     listenContactClick?.invoke(chat)
                 }
