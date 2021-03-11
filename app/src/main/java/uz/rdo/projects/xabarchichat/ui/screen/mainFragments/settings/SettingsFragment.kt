@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
+import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentSettingsBinding
 import uz.rdo.projects.xabarchichat.ui.screen.activities.entry.EntryActivity
 
@@ -34,7 +35,14 @@ class SettingsFragment : Fragment() {
 
     @SuppressLint("FragmentLiveDataObserve")
     private fun loadObservers() {
+        viewModel.getUserData()
         viewModel.signOutData.observe(this, signOutObserver)
+        viewModel.userData.observe(this, userDataObserver)
+    }
+
+    private val userDataObserver = Observer<User> { myFirebaseUser ->
+        binding.txtUsername.text = myFirebaseUser.username
+        binding.txtUserEmail.text = myFirebaseUser.email
 
     }
 
