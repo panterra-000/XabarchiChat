@@ -21,6 +21,9 @@ class DualMessageViewModel @ViewModelInject constructor(
     private val _firebaseUserData = MutableLiveData<User>()
     val firebaseUserData: LiveData<User> get() = _firebaseUserData
 
+    private val _toBeSeenMessagesData = MutableLiveData<Boolean>()
+    val toBeSeenMessageData: LiveData<Boolean> get() = _toBeSeenMessagesData
+
     fun getFirebaseUser() {
         repository.getFirebaseUser() { firebaseUser ->
             _firebaseUserData.value = firebaseUser
@@ -37,6 +40,15 @@ class DualMessageViewModel @ViewModelInject constructor(
     fun sendMessage(messageModel: MessageModel, receiverUser: User) {
         repository.sendMessage(messageModel = messageModel, receiverUser = receiverUser) { isSent ->
             _isSendMessage.value = isSent
+        }
+    }
+
+    fun toBeSeenMessages(senderUser: User, receiverUser: User) {
+        repository.messagesToBeSeenUpload(
+            senderUser = senderUser,
+            receiverUser = receiverUser
+        ) { isSeenAllMessages ->
+            _toBeSeenMessagesData.value = isSeenAllMessages
         }
     }
 

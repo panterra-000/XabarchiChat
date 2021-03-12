@@ -31,11 +31,13 @@
     <color name="text_green">#2DA32F</color>
 
 
+    <!--  Message background colors  -->
+
+    <!-- Receiver message -->
     <color name="leftChatStartColorTR">#80DF50FF</color>
     <color name="leftChatCenterColorTR">#80941FE6</color>
     <color name="leftChatEndColorTR">#80131CC5</color>
-
-
+    <!-- Sender message -->
     <color name="rightChatCenterColorTR">#99FFFFFF</color>
     <color name="rightChatEndColorTR">#99FFFFFF</color>
     <color name="rightChatStartColorTR">#99FFFFFF</color>

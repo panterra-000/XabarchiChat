@@ -184,7 +184,50 @@ class DualMessageRepositoryImpl @Inject constructor(
                         }
                     }
                 })
+    }
 
+    override fun messagesToBeSeenUpload(
+        senderUser: User,
+        receiverUser: User,
+        toBeSeenCallback: SingleBlock<Boolean>
+    ) {
+        val refMessages = firebaseDatabase.reference.child("Messages")
+        val refMyMessagesList = refMessages.child(senderUser.uid)
+        val refMessagesWithPartner = refMyMessagesList.child(receiverUser.uid).child("Messages")
+        val refPartnerMessagesWithMe =
+            refMessages.child(receiverUser.uid).child(senderUser.uid).child("Messages")
+
+
+        refMessagesWithPartner
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (messageData in snapshot.children) {
+                        val messageModel = messageData.getValue(MessageModel::class.java)
+                        if (messageModel != null) {
+                            if (messageModel.senderID == receiverUser.uid) {
+                                val isSeenHashMap = HashMap<String, Boolean>()
+                                isSeenHashMap["isSeen"] = true
+                                refMessagesWithPartner.child(messageModel.messageID).child("isSeen")
+                                    .setValue(isSeenHashMap).addOnCompleteListener { isSeenTask ->
+                                        if (isSeenTask.isSuccessful) {
+                                            refPartnerMessagesWithMe.child(messageModel.messageID)
+                                                .child("isSeen").setValue(isSeenHashMap)
+                                                .addOnCompleteListener { isSeenPartnerTask ->
+                                                    if (isSeenPartnerTask.isSuccessful) {
+                                                        toBeSeenCallback.invoke(true)
+                                                    }
+                                                }
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                }
+            })
 
     }
 
