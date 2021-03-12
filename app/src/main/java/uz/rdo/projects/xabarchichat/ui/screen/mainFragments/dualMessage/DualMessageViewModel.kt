@@ -39,7 +39,6 @@ class DualMessageViewModel @ViewModelInject constructor(
 
     fun sendMessage(messageModel: MessageModel, receiverUser: User) {
         repository.sendMessage(messageModel = messageModel, receiverUser = receiverUser) { isSent ->
-            _isSendMessage.value = isSent
         }
     }
 
@@ -49,6 +48,13 @@ class DualMessageViewModel @ViewModelInject constructor(
         ) { isSeenAllMessages ->
             _toBeSeenMessagesData.value = isSeenAllMessages
         }
+    }
+
+    fun disconnect() {
+        _toBeSeenMessagesData.value = null
+        _firebaseUserData.value = null
+        _allMessages.value = null
+        _isSendMessage.value = null
     }
 
 

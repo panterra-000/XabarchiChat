@@ -125,7 +125,6 @@ class DualMessageRepositoryImpl @Inject constructor(
                                                 }
                                         }
                                     }
-
                             } else {
                                 isSentMessageCallback.invoke(false)
                             }

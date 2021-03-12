@@ -52,7 +52,6 @@ class DualMessageFragment : Fragment() {
     private fun loadObservers() {
         viewModel.getFirebaseUser()
         viewModel.getAllMessages(args.receiverContact)
-        viewModel.toBeSeenMessages(args.receiverContact)
 
         viewModel.firebaseUserData.observe(this, firebaseUserDataObserver)
         viewModel.allMessages.observe(this, allMessagesObserver)
@@ -69,6 +68,8 @@ class DualMessageFragment : Fragment() {
     private val allMessagesObserver = Observer<List<MessageModel>> { messages ->
         adapter.submitMessages(messages)
         binding.rvMessage.scrollToPosition(adapter.itemCount - 1)
+        viewModel.toBeSeenMessages(args.receiverContact)
+
     }
 
     private val isSendMessageObserver = Observer<Boolean> { isSend ->
@@ -117,6 +118,12 @@ class DualMessageFragment : Fragment() {
             viewModel.sendMessage(messageModel = messageModel, receiverUser = args.receiverContact)
             binding.etMessage.setText("")
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.disconnect()
+
     }
 
 }
