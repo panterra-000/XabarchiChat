@@ -187,16 +187,15 @@ class DualMessageRepositoryImpl @Inject constructor(
     }
 
     override fun messagesToBeSeenUpload(
-        senderUser: User,
         receiverUser: User,
         toBeSeenCallback: SingleBlock<Boolean>
     ) {
-        val refMessages = firebaseDatabase.reference.child("Messages")
-        val refMyMessagesList = refMessages.child(senderUser.uid)
+        val id = storage.firebaseID
+        val refMessages = firebaseDatabase.reference.child("MessageList")
+        val refMyMessagesList = refMessages.child(id)
         val refMessagesWithPartner = refMyMessagesList.child(receiverUser.uid).child("Messages")
         val refPartnerMessagesWithMe =
-            refMessages.child(receiverUser.uid).child(senderUser.uid).child("Messages")
-
+            refMessages.child(receiverUser.uid).child(id).child("Messages")
 
         refMessagesWithPartner
             .addValueEventListener(object : ValueEventListener {
@@ -209,13 +208,13 @@ class DualMessageRepositoryImpl @Inject constructor(
                         val messageModel = messageData.getValue(MessageModel::class.java)
                         if (messageModel != null) {
                             if (messageModel.senderID == receiverUser.uid) {
-                                val isSeenHashMap = HashMap<String, Boolean>()
-                                isSeenHashMap["isSeen"] = true
+                                val isSeenHashMap = HashMap<String, Any>()
                                 refMessagesWithPartner.child(messageModel.messageID).child("isSeen")
-                                    .setValue(isSeenHashMap).addOnCompleteListener { isSeenTask ->
+                                    .setValue(true).addOnCompleteListener { isSeenTask ->
                                         if (isSeenTask.isSuccessful) {
                                             refPartnerMessagesWithMe.child(messageModel.messageID)
-                                                .child("isSeen").setValue(isSeenHashMap)
+                                                .child("isSeen")
+                                                .setValue(true)
                                                 .addOnCompleteListener { isSeenPartnerTask ->
                                                     if (isSeenPartnerTask.isSuccessful) {
                                                         toBeSeenCallback.invoke(true)

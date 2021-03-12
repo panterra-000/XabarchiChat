@@ -52,9 +52,17 @@ class DualMessageFragment : Fragment() {
     private fun loadObservers() {
         viewModel.getFirebaseUser()
         viewModel.getAllMessages(args.receiverContact)
+        viewModel.toBeSeenMessages(args.receiverContact)
+
+        viewModel.toBeSeenMessageData.observe(this, toBeSeenMessagesObserver)
         viewModel.firebaseUserData.observe(this, firebaseUserDataObserver)
         viewModel.allMessages.observe(this, allMessagesObserver)
         viewModel.isSendMessage.observe(this, isSendMessageObserver)
+    }
+
+    private val toBeSeenMessagesObserver = Observer<Boolean> { isSeenAllMessages ->
+        val a = isSeenAllMessages
+        showToast(a.toString())
     }
 
     private val firebaseUserDataObserver = Observer<User> { firebaseUser ->

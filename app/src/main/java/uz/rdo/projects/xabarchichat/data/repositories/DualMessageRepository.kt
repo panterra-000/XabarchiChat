@@ -19,6 +19,6 @@ interface DualMessageRepository {
 
     fun uploadLastMessage(senderUser: User, receiverUser: User, singleBlock: SingleBlock<Boolean>)
 
-    fun messagesToBeSeenUpload(senderUser: User, receiverUser: User, toBeSeenCallback: SingleBlock<Boolean>)
+    fun messagesToBeSeenUpload(receiverUser: User, toBeSeenCallback: SingleBlock<Boolean>)
 
 }

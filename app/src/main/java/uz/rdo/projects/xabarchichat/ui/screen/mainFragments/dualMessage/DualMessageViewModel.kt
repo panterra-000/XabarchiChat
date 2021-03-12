@@ -43,9 +43,8 @@ class DualMessageViewModel @ViewModelInject constructor(
         }
     }
 
-    fun toBeSeenMessages(senderUser: User, receiverUser: User) {
+    fun toBeSeenMessages(receiverUser: User) {
         repository.messagesToBeSeenUpload(
-            senderUser = senderUser,
             receiverUser = receiverUser
         ) { isSeenAllMessages ->
             _toBeSeenMessagesData.value = isSeenAllMessages
