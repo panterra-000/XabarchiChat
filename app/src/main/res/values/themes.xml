@@ -84,6 +84,13 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
+    <style name="txt_device_count_style">
+        <item name="android:textSize">@dimen/txt_parts_size</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 
     <style name="reset_password_text_style">
         <item name="android:textSize">@dimen/txt_middle_size</item>

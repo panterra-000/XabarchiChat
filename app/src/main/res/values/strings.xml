@@ -39,6 +39,17 @@
     <string name="message">Message...</string>
     <string name="if_simple_message_send_CODE">)no-no(</string>
     <string name="saved_messages">Saved messages</string>
+    <string name="recent_calls">Recent calls</string>
+    <string name="devices">Devices</string>
+    <string name="chat_folders">Chat Folders</string>
+    <string name="notifications_and_sounds">Notifications and Sounds</string>
+    <string name="privacy_and_security">Privacy and Security</string>
+    <string name="data_and_storage">Data and Storage</string>
+    <string name="appearance">Appearance</string>
+    <string name="language">Language</string>
+    <string name="english">English</string>
+    <string name="ask_a_questions">Ask a Questions</string>
+    <string name="xabarchi_faq">Xabarchi FAQ</string>
 
 
     <string-array name="spn_filter_items">
