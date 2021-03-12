@@ -143,4 +143,49 @@ class DualMessageRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
+    override fun uploadLastMessage(
+        senderUser: User,
+        receiverUser: User,
+        singleBlock: SingleBlock<Boolean>
+    ) {
+        val refMessages =
+            firebaseDatabase.reference.child("MessageList").child(senderUser.uid)
+                .child(receiverUser.uid).child("Messages")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (messageData in snapshot.children) {
+                            val messageModel = messageData.getValue(MessageModel::class.java)
+                            if (messageModel!!.senderID == senderUser.uid) {
+                                val uploadHashMap = HashMap<String, Any>()
+                                uploadHashMap["messageID"] = messageModel!!.messageID
+                                uploadHashMap["messageText"] = messageModel!!.messageText
+                                uploadHashMap["senderID"] = messageModel!!.senderID
+                                uploadHashMap["receiverID"] = messageModel!!.receiverID
+                                uploadHashMap["sendDate"] = messageModel!!.sendDate
+                                uploadHashMap["imageMessageURL"] = messageModel.imageMessageURL
+                                uploadHashMap["isSeen"] = true
+
+                                val refUploadSingleMessage =
+                                    firebaseDatabase.reference.child("MessageList")
+                                        .child(senderUser.uid).child(receiverUser.uid)
+                                        .child("Messages")
+                                        .child(messageModel.messageID).setValue(uploadHashMap)
+                                        .addOnCompleteListener {
+                                            if (it.isSuccessful) {
+
+
+                                            }
+                                        }
+                            }
+                        }
+                    }
+                })
+
+
+    }
+
 }

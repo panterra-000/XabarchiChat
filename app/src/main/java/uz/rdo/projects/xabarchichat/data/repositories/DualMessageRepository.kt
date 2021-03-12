@@ -17,5 +17,7 @@ interface DualMessageRepository {
 
     fun deleteMessage(messageModel: MessageModel, isDeletedMessageCallback: SingleBlock<Boolean>)
 
+    fun uploadLastMessage(senderUser: User, receiverUser: User, singleBlock: SingleBlock<Boolean>)
+
 
 }

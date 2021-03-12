@@ -64,15 +64,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_user_email" />
 
+
     <LinearLayout
         android:id="@+id/btn_saved_messages"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2">
 
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_saved_ms" />
 
+        <TextView
+            style="@style/txt_item_settings_style"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/saved_messages"
+            app:layout_constraintTop_toBottomOf="@+id/view2" />
 
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_right" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="72dp"
+        android:background="@color/text_grey"
+        app:layout_constraintTop_toBottomOf="@+id/btn_saved_messages"
+        tools:layout_editor_absoluteX="16dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

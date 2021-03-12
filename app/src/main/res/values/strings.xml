@@ -38,6 +38,7 @@
     <string name="contact_deleted">Contact deleted</string>
     <string name="message">Message...</string>
     <string name="if_simple_message_send_CODE">)no-no(</string>
+    <string name="saved_messages">Saved messages</string>
 
 
     <string-array name="spn_filter_items">
