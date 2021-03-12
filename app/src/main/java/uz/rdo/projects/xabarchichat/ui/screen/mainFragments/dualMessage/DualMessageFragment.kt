@@ -54,16 +54,11 @@ class DualMessageFragment : Fragment() {
         viewModel.getAllMessages(args.receiverContact)
         viewModel.toBeSeenMessages(args.receiverContact)
 
-        viewModel.toBeSeenMessageData.observe(this, toBeSeenMessagesObserver)
         viewModel.firebaseUserData.observe(this, firebaseUserDataObserver)
         viewModel.allMessages.observe(this, allMessagesObserver)
         viewModel.isSendMessage.observe(this, isSendMessageObserver)
     }
 
-    private val toBeSeenMessagesObserver = Observer<Boolean> { isSeenAllMessages ->
-        val a = isSeenAllMessages
-        showToast(a.toString())
-    }
 
     private val firebaseUserDataObserver = Observer<User> { firebaseUser ->
         if (firebaseUser != null) {
@@ -74,7 +69,6 @@ class DualMessageFragment : Fragment() {
     private val allMessagesObserver = Observer<List<MessageModel>> { messages ->
         adapter.submitMessages(messages)
         binding.rvMessage.scrollToPosition(adapter.itemCount - 1)
-
     }
 
     private val isSendMessageObserver = Observer<Boolean> { isSend ->
@@ -93,6 +87,9 @@ class DualMessageFragment : Fragment() {
             adapter.submitMessages(listOf())
             binding.rvMessage.layoutManager = LinearLayoutManager(requireContext())
             binding.rvMessage.adapter = adapter
+            adapter.onclickCallback {
+                showToast("text: ${it.messageText}  \nisSeen: ${it.isSeen}  ")
+            }
 
         }
     }
@@ -121,6 +118,5 @@ class DualMessageFragment : Fragment() {
             binding.etMessage.setText("")
         }
     }
-
 
 }

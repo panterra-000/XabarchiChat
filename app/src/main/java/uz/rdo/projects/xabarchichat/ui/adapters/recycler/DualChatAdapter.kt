@@ -4,14 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.databinding.LeftChatItemBinding
 import uz.rdo.projects.xabarchichat.databinding.RightChatItemBinding
+import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import uz.rdo.projects.xabarchichat.utils.time.convertLongToTime
 
 class DualChatAdapter(private val myId: String) :
     RecyclerView.Adapter<DualChatAdapter.BaseViewHolder>() {
     var messages: ArrayList<MessageModel> = ArrayList()
+
+    var listenClick: SingleBlock<MessageModel>? = null
 
     companion object {
         private const val TYPE_SENDER = 0
@@ -55,8 +59,19 @@ class DualChatAdapter(private val myId: String) :
         BaseViewHolder(binding.root) {
         override fun bind() {
             binding.apply {
+                val message = messages[adapterPosition]
                 txtMessage.text = messages[adapterPosition].messageText
                 txtTimeOf.text = convertLongToTime(messages[adapterPosition].sendDate)
+                if (message.isSeen) {
+                    imgSeen.setImageResource(R.drawable.ic_all_read)
+                } else {
+                    imgSeen.setImageResource(R.drawable.ic_sent)
+                }
+
+                root.setOnClickListener {
+                    listenClick?.invoke(message)
+                }
+
             }
         }
     }
@@ -82,6 +97,11 @@ class DualChatAdapter(private val myId: String) :
         messages.clear()
         messages.addAll(_messages)
         notifyDataSetChanged()
+    }
+
+
+    fun onclickCallback(f: SingleBlock<MessageModel>) {
+        listenClick = f
     }
 
 

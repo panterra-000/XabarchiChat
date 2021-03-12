@@ -82,7 +82,7 @@ class DualMessageRepositoryImpl @Inject constructor(
         messageHashMap["receiverID"] = messageModel.receiverID
         messageHashMap["sendDate"] = messageModel.sendDate
         messageHashMap["imageMessageURL"] = messageModel.imageMessageURL
-        messageHashMap["isSeen"] = messageModel.isSeen
+        messageHashMap["isSeen"] = false
 
         firebaseDatabase.reference.child("MessageList").child(messageModel.senderID)
             .child(messageModel.receiverID)
@@ -143,48 +143,6 @@ class DualMessageRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun uploadLastMessage(
-        senderUser: User,
-        receiverUser: User,
-        singleBlock: SingleBlock<Boolean>
-    ) {
-        val refMessages =
-            firebaseDatabase.reference.child("MessageList").child(senderUser.uid)
-                .child(receiverUser.uid).child("Messages")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
-                    }
-
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for (messageData in snapshot.children) {
-                            val messageModel = messageData.getValue(MessageModel::class.java)
-                            if (messageModel!!.senderID == senderUser.uid) {
-                                val uploadHashMap = HashMap<String, Any>()
-                                uploadHashMap["messageID"] = messageModel!!.messageID
-                                uploadHashMap["messageText"] = messageModel!!.messageText
-                                uploadHashMap["senderID"] = messageModel!!.senderID
-                                uploadHashMap["receiverID"] = messageModel!!.receiverID
-                                uploadHashMap["sendDate"] = messageModel!!.sendDate
-                                uploadHashMap["imageMessageURL"] = messageModel.imageMessageURL
-                                uploadHashMap["isSeen"] = true
-
-                                val refUploadSingleMessage =
-                                    firebaseDatabase.reference.child("MessageList")
-                                        .child(senderUser.uid).child(receiverUser.uid)
-                                        .child("Messages")
-                                        .child(messageModel.messageID).setValue(uploadHashMap)
-                                        .addOnCompleteListener {
-                                            if (it.isSuccessful) {
-
-
-                                            }
-                                        }
-                            }
-                        }
-                    }
-                })
-    }
 
     override fun messagesToBeSeenUpload(
         receiverUser: User,
@@ -217,6 +175,10 @@ class DualMessageRepositoryImpl @Inject constructor(
                                                 .setValue(true)
                                                 .addOnCompleteListener { isSeenPartnerTask ->
                                                     if (isSeenPartnerTask.isSuccessful) {
+                                                        refMessages.onDisconnect()
+                                                        refMyMessagesList.onDisconnect()
+                                                        refMessagesWithPartner.onDisconnect()
+                                                        refPartnerMessagesWithMe.onDisconnect()
                                                         toBeSeenCallback.invoke(true)
                                                     }
                                                 }
