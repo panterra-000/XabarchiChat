@@ -31,14 +31,14 @@
     <color name="text_green">#2DA32F</color>
 
 
-    <color name="leftChatStartColorTR">#66BB1BDF</color>
-    <color name="leftChatCenterColorTR">#668932C6</color>
-    <color name="leftChatEndColorTR">#66242DDF</color>
+    <color name="leftChatStartColorTR">#80DF50FF</color>
+    <color name="leftChatCenterColorTR">#80941FE6</color>
+    <color name="leftChatEndColorTR">#80131CC5</color>
 
 
-    <color name="rightChatCenterColorTR">#6632C6B5</color>
-    <color name="rightChatEndColorTR">#6649AE96</color>
-    <color name="rightChatStartColorTR">#663AEAD6</color>
+    <color name="rightChatCenterColorTR">#99FFFFFF</color>
+    <color name="rightChatEndColorTR">#99FFFFFF</color>
+    <color name="rightChatStartColorTR">#99FFFFFF</color>
 
 
 </resources>
