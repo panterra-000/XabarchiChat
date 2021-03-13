@@ -8,4 +8,15 @@ data class MessageModel(
     val sendDate: Long = 0L,
     val imageMessageURL: String = "",
     var isSeen: Boolean = false
-)
+) {
+    fun getIsSeen(): Boolean {
+        return this.isSeen
+    }
+
+    fun setIsSeen(
+        isSeen: Boolean
+    ) {
+        this.isSeen = isSeen
+    }
+}
+

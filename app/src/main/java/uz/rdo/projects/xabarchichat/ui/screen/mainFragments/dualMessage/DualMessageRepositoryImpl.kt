@@ -155,7 +155,6 @@ class DualMessageRepositoryImpl @Inject constructor(
             refMessages.child(receiverUser.uid).child(id).child("Messages")
 
 
-
         refMessagesWithPartner.addValueEventListener(object : ValueEventListener {
             var taskDone = false
             override fun onCancelled(error: DatabaseError) {

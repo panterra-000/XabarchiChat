@@ -10,6 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
@@ -69,7 +73,6 @@ class DualMessageFragment : Fragment() {
         adapter.submitMessages(messages)
         binding.rvMessage.scrollToPosition(adapter.itemCount - 1)
         viewModel.toBeSeenMessages(args.receiverContact)
-
     }
 
     private val isSendMessageObserver = Observer<Boolean> { isSend ->
@@ -82,6 +85,13 @@ class DualMessageFragment : Fragment() {
     private fun loadViews() {
 
         binding.apply {
+
+
+            btnAttachFile.setOnClickListener {
+                showToast("adwdawdawdad")
+                exampleGetMessage()
+            }
+
             txtNameReceiver.text = args.receiverContact.username
             txtLastSeenTime.text = args.receiverContact.lastSeenTime.toString()
             adapter = DualChatAdapter(storage.firebaseID)
@@ -125,5 +135,26 @@ class DualMessageFragment : Fragment() {
         viewModel.disconnect()
 
     }
+
+
+    private fun exampleGetMessage() {
+        val refMessage = FirebaseDatabase.getInstance().reference.child("MessageList")
+            .child("RRno8uJqBIchQ1TsfGbHpEbLnVA2").child("mdAhINOsNCO3L3TdmmT6NFihaDg2")
+            .child("Messages").child("-MVhQeCABO1lCDQ--aYI")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val mModel = snapshot.getValue(MessageModel::class.java)
+                    if (mModel != null) {
+                        val str = mModel.messageText + " ---- --- isSeen : " + mModel.isSeen
+                        binding.etMessage.setText(str)
+                    }
+                }
+            })
+    }
+
 
 }
