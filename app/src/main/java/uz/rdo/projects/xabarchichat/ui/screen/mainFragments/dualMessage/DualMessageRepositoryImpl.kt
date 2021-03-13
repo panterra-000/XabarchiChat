@@ -154,41 +154,85 @@ class DualMessageRepositoryImpl @Inject constructor(
         val refPartnerMessagesWithMe =
             refMessages.child(receiverUser.uid).child(id).child("Messages")
 
-        refMessagesWithPartner
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
+
+        refMessagesWithPartner.addValueEventListener(object : ValueEventListener {
+            var taskDone = false
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists() && !taskDone) {
+                    var allMessagesUpdate = true
                     for (messageData in snapshot.children) {
                         val messageModel = messageData.getValue(MessageModel::class.java)
                         if (messageModel != null) {
                             if (messageModel.senderID == receiverUser.uid) {
-                                val isSeenHashMap = HashMap<String, Any>()
                                 refMessagesWithPartner.child(messageModel.messageID).child("isSeen")
-                                    .setValue(true).addOnCompleteListener { isSeenTask ->
-                                        if (isSeenTask.isSuccessful) {
+                                    .setValue(true).addOnCompleteListener { change ->
+                                        if (change.isSuccessful) {
                                             refPartnerMessagesWithMe.child(messageModel.messageID)
                                                 .child("isSeen")
-                                                .setValue(true)
-                                                .addOnCompleteListener { isSeenPartnerTask ->
-                                                    if (isSeenPartnerTask.isSuccessful) {
-                                                        refMessages.onDisconnect()
-                                                        refMyMessagesList.onDisconnect()
-                                                        refMessagesWithPartner.onDisconnect()
-                                                        refPartnerMessagesWithMe.onDisconnect()
-                                                        toBeSeenCallback.invoke(true)
+                                                .setValue(true).addOnCompleteListener { change ->
+                                                    if (!change.isSuccessful) {
+                                                        allMessagesUpdate = false
                                                     }
                                                 }
+                                        } else {
+                                            allMessagesUpdate = false
                                         }
                                     }
                             }
                         }
                     }
+                    taskDone = true
+                    toBeSeenCallback.invoke(allMessagesUpdate)
                 }
-            })
+            }
+        })
+
 
     }
 
 }
+
+
+/*
+*   refMessagesWithPartner
+            .addValueEventListener(object : ValueEventListener {
+                var processDone = false
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists() && !processDone) {
+                        for (messageData in snapshot.children) {
+                            val messageModel = messageData.getValue(MessageModel::class.java)
+                            if (messageModel != null) {
+                                if (messageModel.senderID == receiverUser.uid) {
+                                    val isSeenHashMap = HashMap<String, Any>()
+                                    refMessagesWithPartner.child(messageModel.messageID)
+                                        .child("isSeen")
+                                        .setValue(true).addOnCompleteListener { isSeenTask ->
+                                            if (isSeenTask.isSuccessful) {
+                                                refPartnerMessagesWithMe.child(messageModel.messageID)
+                                                    .child("isSeen")
+                                                    .setValue(true)
+                                                    .addOnCompleteListener { isSeenPartnerTask ->
+                                                        if (isSeenPartnerTask.isSuccessful) {
+                                                            toBeSeenCallback.invoke(true)
+                                                            processDone = true
+                                                        }
+                                                    }
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                    }
+                }
+            })
+*
+* */
