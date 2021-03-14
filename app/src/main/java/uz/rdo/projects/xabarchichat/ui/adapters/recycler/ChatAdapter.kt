@@ -3,6 +3,7 @@ package uz.rdo.projects.xabarchichat.ui.adapters.recycler
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.channels.consumesAll
 import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.databinding.ItemChatBinding
@@ -27,18 +28,25 @@ class ChatAdapter(
                 val chat = chats[adapterPosition]
                 txtReceiverName.text = chat.receiverUser!!.username
                 txtLastMessage.text = chat.messageModel!!.messageText
+                val message = chat.messageModel
 
-                if (chat.messageModel!!.isSeen) {
-                    imgIsSeen.setImageResource(R.drawable.ic_all_read)
+                if (message.senderID == myID) {
+                    if (message.isSeen) {
+                        imgIsSeen.setImageResource(R.drawable.ic_all_read)
+                    } else {
+                        imgIsSeen.setImageResource(R.drawable.ic_sent)
+                    }
                 } else {
-                    imgIsSeen.setImageResource(R.drawable.ic_sent)
+                    if (message.isSeen) {
+                        imgIsSeen.hideView()
+                    } else {
+                        imgIsSeen.showView()
+                        imgIsSeen.setImageResource(R.drawable.ic_new_message)
+                    }
                 }
 
-                if (chat.messageModel!!.senderID == myID) {
-                    imgIsSeen.showView()
-                } else {
-                    imgIsSeen.hideView()
-                }
+
+
 
                 if (chat.receiverUser!!.status == "online") {
                     viewOnlineStatus.setBackgroundResource(R.drawable.online_back)
