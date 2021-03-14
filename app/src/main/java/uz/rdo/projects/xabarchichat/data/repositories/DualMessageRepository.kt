@@ -18,7 +18,6 @@ interface DualMessageRepository {
 
     fun sendPicture(
         fileUri: Uri,
-        messageModel: MessageModel,
         receiverUser: User,
         isSentPictureCallback: SingleBlock<String>
     )

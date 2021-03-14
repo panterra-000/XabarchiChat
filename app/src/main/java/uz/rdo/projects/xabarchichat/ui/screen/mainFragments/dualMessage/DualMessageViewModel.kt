@@ -55,17 +55,10 @@ class DualMessageViewModel @ViewModelInject constructor(
         }
     }
 
-    fun disconnect() {
-        _toBeSeenMessagesData.value = null
-        _firebaseUserData.value = null
-        _allMessages.value = null
-        _isSendMessage.value = null
-    }
 
-    fun sendPicture(uri: Uri, messageModel: MessageModel, receiverUser: User) {
+    fun sendPicture(uri: Uri, receiverUser: User) {
         repository.sendPicture(
             fileUri = uri,
-            messageModel = messageModel,
             receiverUser = receiverUser,
         ) { isSendPicture ->
             _sendPictureData.value = isSendPicture

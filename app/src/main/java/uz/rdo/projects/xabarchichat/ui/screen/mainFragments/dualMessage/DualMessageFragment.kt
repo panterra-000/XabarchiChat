@@ -1,6 +1,7 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -23,6 +24,8 @@ import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.DualChatAdapter
+import uz.rdo.projects.xabarchichat.utils.CHOOSER_REQUEST_CODE
+import uz.rdo.projects.xabarchichat.utils.extensions.pickImageChooserIntent
 import uz.rdo.projects.xabarchichat.utils.extensions.showToast
 import uz.rdo.projects.xabarchichat.utils.time.getCurrentDateTime
 import javax.inject.Inject
@@ -32,6 +35,7 @@ class DualMessageFragment : Fragment() {
 
     lateinit var binding: FragmentDualMessageBinding
     lateinit var adapter: DualChatAdapter
+
 
     @Inject
     lateinit var storage: LocalStorage
@@ -66,8 +70,8 @@ class DualMessageFragment : Fragment() {
 
     }
 
-    private val sendPictureDataObserver = Observer<Boolean> {
-
+    private val sendPictureDataObserver = Observer<String> { sentPictureURL ->
+        showToast(sentPictureURL)
     }
 
     private val firebaseUserDataObserver = Observer<User> { firebaseUser ->
@@ -94,12 +98,6 @@ class DualMessageFragment : Fragment() {
 
         binding.apply {
 
-
-            btnAttachFile.setOnClickListener {
-                showToast("adwdawdawdad")
-                exampleGetMessage()
-            }
-
             txtNameReceiver.text = args.receiverContact.username
             txtLastSeenTime.text = args.receiverContact.lastSeenTime.toString()
             adapter = DualChatAdapter(storage.firebaseID)
@@ -109,7 +107,6 @@ class DualMessageFragment : Fragment() {
             adapter.onclickCallback {
                 showToast("text: ${it.messageText}  \nisSeen: ${it.isSeen}  ")
             }
-
         }
     }
 
@@ -117,6 +114,10 @@ class DualMessageFragment : Fragment() {
         binding.apply {
             btnSend.setOnClickListener {
                 sendMessage()
+            }
+
+            btnAttachFile.setOnClickListener {
+                pickImageChooserIntent(CHOOSER_REQUEST_CODE)
             }
         }
     }
@@ -139,37 +140,17 @@ class DualMessageFragment : Fragment() {
     }
 
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.disconnect()
-
-    }
-
-
-    private fun exampleGetMessage() {
-        val refMessage = FirebaseDatabase.getInstance().reference.child("MessageList")
-            .child("RRno8uJqBIchQ1TsfGbHpEbLnVA2").child("mdAhINOsNCO3L3TdmmT6NFihaDg2")
-            .child("Messages").child("-MVhQeCABO1lCDQ--aYI")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val mModel = snapshot.getValue(MessageModel::class.java)
-                    if (mModel != null) {
-                        val str = mModel.messageText + " ---- --- isSeen : " + mModel.isSeen
-                        binding.etMessage.setText(str)
-                    }
-                }
-            })
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
+        if (requestCode == CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
 
+            viewModel.sendPicture(
+                uri = data.data!!,
+                receiverUser = args.receiverContact
+                )
+
+        }
     }
-
 
 }

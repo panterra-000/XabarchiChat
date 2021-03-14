@@ -19,6 +19,7 @@ import uz.rdo.projects.xabarchichat.data.repositories.DualMessageRepository
 import uz.rdo.projects.xabarchichat.utils.IF_PICTURE_MESSAGE_TEXT
 import uz.rdo.projects.xabarchichat.utils.STATUS_PERSONAL
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
+import uz.rdo.projects.xabarchichat.utils.time.getCurrentDateTime
 import javax.inject.Inject
 
 class DualMessageRepositoryImpl @Inject constructor(
@@ -154,7 +155,6 @@ class DualMessageRepositoryImpl @Inject constructor(
 
     override fun sendPicture(
         fileUri: Uri,
-        messageModel: MessageModel,
         receiverUser: User,
         isSentPictureCallback: SingleBlock<String>
     ) {
@@ -181,9 +181,9 @@ class DualMessageRepositoryImpl @Inject constructor(
                 val pictureMessageModel = MessageModel(
                     messageID = messageID.toString(),
                     messageText = IF_PICTURE_MESSAGE_TEXT,
-                    senderID = messageModel.senderID,
-                    receiverID = messageModel.receiverID,
-                    sendDate = messageModel.sendDate,
+                    senderID = storage.firebaseID,
+                    receiverID = receiverUser.uid,
+                    sendDate = getCurrentDateTime(),
                     imageMessageURL = url,
                     isSeen = false
                 )
