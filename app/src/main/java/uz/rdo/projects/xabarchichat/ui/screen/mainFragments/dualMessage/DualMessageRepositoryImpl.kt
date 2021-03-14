@@ -1,6 +1,7 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
 import android.net.Uri
+import android.provider.Settings.Global.getString
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 
@@ -12,6 +13,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
+import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
@@ -180,7 +182,7 @@ class DualMessageRepositoryImpl @Inject constructor(
                 val pictureUrl = downloadUrl.toString()
                 val pictureMessageModel = MessageModel(
                     messageID = messageID.toString(),
-                    messageText = IF_PICTURE_MESSAGE_TEXT,
+                    messageText = "picture",
                     senderID = storage.firebaseID,
                     receiverID = receiverUser.uid,
                     sendDate = getCurrentDateTime(),

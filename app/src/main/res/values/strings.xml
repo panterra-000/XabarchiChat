@@ -52,6 +52,10 @@
     <string name="xabarchi_faq">Xabarchi FAQ</string>
 
 
+    <string name="image_code">Image</string>
+    <string name="awdaw">adawd</string>
+
+
     <string-array name="spn_filter_items">
         <item>Sorted by Name</item>
         <item>Sorted by Last Seen Time</item>

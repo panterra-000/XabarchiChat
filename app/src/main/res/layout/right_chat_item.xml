@@ -19,7 +19,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="Assalomu alekum ddawdd dddad dd  ddadw aadw Qaaalllleeesssiiz"
+            tools:text="Assalomu alekum ddawdd dddad dd  ddadw aadw Qaaalllleeesssiiz"
             android:textColor="@color/text_dark_blue"
             android:textSize="@dimen/txt_chat_text_size"
             app:layout_constraintEnd_toStartOf="@+id/img_seen"

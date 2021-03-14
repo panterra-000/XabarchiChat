@@ -8,15 +8,15 @@ import android.view.inputmethod.InputMethodManager
  * Created by Davronbek Raximjanov on 17-Feb-21
  **/
 
-fun View.showView(){
+fun View.showView() {
     this.visibility = View.VISIBLE
 }
 
-fun View.hideView(){
+fun View.hideView() {
     this.visibility = View.GONE
 }
 
-fun View.inVisible(){
+fun View.inVisible() {
     this.visibility = View.INVISIBLE
 }
 
@@ -34,3 +34,10 @@ fun hideKeyboard(activity: Activity) {
     // hide the keyboard
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
+
+
+
+
+
+
+

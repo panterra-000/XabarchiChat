@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentAllUsersBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.UsersAdapter
@@ -41,7 +42,6 @@ class AllUsersFragment : Fragment() {
         adapter.submitUsers(listOf())
         binding.rvPersons.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPersons.adapter = adapter
-
         adapter.addContactClickCallback { newUser ->
             viewModel.addContact(newUser)
         }

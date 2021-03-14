@@ -130,7 +130,7 @@ class DualMessageFragment : Fragment() {
                 messageText = messageTXT,
                 senderID = storage.firebaseID,
                 receiverID = args.receiverContact.uid,
-                imageMessageURL = getString(R.string.if_simple_message_send_CODE),
+                imageMessageURL = "",
                 sendDate = getCurrentDateTime(),
                 isSeen = false
             )
@@ -148,7 +148,7 @@ class DualMessageFragment : Fragment() {
             viewModel.sendPicture(
                 uri = data.data!!,
                 receiverUser = args.receiverContact
-                )
+            )
 
         }
     }

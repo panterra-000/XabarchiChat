@@ -18,7 +18,7 @@
             android:id="@+id/txt_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Assalomu alekum ddawdd dddad dd  ddadw aadw Qaaalllleeesssiiz"
+            tools:text="Assalomu alekum ddawdd dddad dd  ddadw aadw Qaaalllleeesssiiz"
             android:textColor="@color/text_dark_blue"
             android:textSize="@dimen/txt_chat_text_size"
             app:layout_constraintEnd_toEndOf="parent"

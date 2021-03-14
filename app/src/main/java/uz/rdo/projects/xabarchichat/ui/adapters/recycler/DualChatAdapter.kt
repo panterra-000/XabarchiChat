@@ -9,6 +9,9 @@ import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.databinding.LeftChatItemBinding
 import uz.rdo.projects.xabarchichat.databinding.RightChatItemBinding
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
+import uz.rdo.projects.xabarchichat.utils.extensions.hideView
+import uz.rdo.projects.xabarchichat.utils.extensions.showView
+import uz.rdo.projects.xabarchichat.utils.loadImageForURL
 import uz.rdo.projects.xabarchichat.utils.time.convertLongToTime
 
 class DualChatAdapter(private val myId: String) :
@@ -60,8 +63,17 @@ class DualChatAdapter(private val myId: String) :
         override fun bind() {
             binding.apply {
                 val message = messages[adapterPosition]
-                txtMessage.text = messages[adapterPosition].messageText
-                txtTimeOf.text = convertLongToTime(messages[adapterPosition].sendDate)
+                if (message.imageMessageURL != "") {
+                    imgMessage.showView()
+                    txtMessage.hideView()
+                    loadImageForURL(message.imageMessageURL, imgMessage)
+                } else {
+                    imgMessage.hideView()
+                    txtMessage.showView()
+                    txtMessage.text = message.messageText
+                }
+                txtTimeOf.text = convertLongToTime(message.sendDate)
+
                 if (message.isSeen) {
                     imgSeen.setImageResource(R.drawable.ic_all_read)
                 } else {
@@ -71,7 +83,6 @@ class DualChatAdapter(private val myId: String) :
                 root.setOnClickListener {
                     listenClick?.invoke(message)
                 }
-
             }
         }
     }
@@ -81,8 +92,15 @@ class DualChatAdapter(private val myId: String) :
         override fun bind() {
             binding.apply {
                 binding.apply {
-                    txtMessage.text = messages[adapterPosition].messageText
-                    txtTimeOf.text = convertLongToTime(messages[adapterPosition].sendDate)
+                    val message = messages[adapterPosition]
+                    if (message.imageMessageURL != "") {
+                        imgMessage.showView()
+                        loadImageForURL(message.imageMessageURL, imgMessage)
+                    } else {
+                        imgMessage.hideView()
+                        txtMessage.text = message.messageText
+                    }
+                    txtTimeOf.text = convertLongToTime(message.sendDate)
                 }
             }
         }
