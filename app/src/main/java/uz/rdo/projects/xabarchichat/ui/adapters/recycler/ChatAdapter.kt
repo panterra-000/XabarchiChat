@@ -42,7 +42,7 @@ class ChatAdapter(
                         imgIsSeen.hideView()
                     } else {
                         imgIsSeen.showView()
-                        imgIsSeen.setImageResource(R.drawable.ic_new_message)
+                        imgIsSeen.setImageResource(R.drawable.ic_new_blue)
                     }
                 }
 

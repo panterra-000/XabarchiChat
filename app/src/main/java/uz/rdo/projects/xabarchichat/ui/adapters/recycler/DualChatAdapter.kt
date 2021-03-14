@@ -95,9 +95,11 @@ class DualChatAdapter(private val myId: String) :
                     val message = messages[adapterPosition]
                     if (message.imageMessageURL != "") {
                         imgMessage.showView()
+                        txtMessage.hideView()
                         loadImageForURL(message.imageMessageURL, imgMessage)
                     } else {
                         imgMessage.hideView()
+                        txtMessage.showView()
                         txtMessage.text = message.messageText
                     }
                     txtTimeOf.text = convertLongToTime(message.sendDate)
