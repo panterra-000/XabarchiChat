@@ -31,6 +31,7 @@ class ChatAdapter(
                 val message = chat.messageModel
 
                 if (message.senderID == myID) {
+                    imgIsSeen.showView()
                     if (message.isSeen) {
                         imgIsSeen.setImageResource(R.drawable.ic_all_read)
                     } else {
