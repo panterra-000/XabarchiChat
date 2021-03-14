@@ -46,9 +46,6 @@ class ChatAdapter(
                     }
                 }
 
-
-
-
                 if (chat.receiverUser!!.status == "online") {
                     viewOnlineStatus.setBackgroundResource(R.drawable.online_back)
                 } else {
@@ -75,12 +72,13 @@ class ChatAdapter(
         notifyDataSetChanged()
     }
 
-
     fun contactClickCallback(f: SingleBlock<ChatModel>) {
         listenContactClick = f
     }
 
 }
+
+// RDO
 
 
 
