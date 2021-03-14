@@ -55,7 +55,6 @@ class DualMessageViewModel @ViewModelInject constructor(
         }
     }
 
-
     fun sendPicture(uri: Uri, receiverUser: User) {
         repository.sendPicture(
             fileUri = uri,

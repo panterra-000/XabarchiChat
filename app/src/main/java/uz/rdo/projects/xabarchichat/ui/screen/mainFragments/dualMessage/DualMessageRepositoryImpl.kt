@@ -85,15 +85,15 @@ class DualMessageRepositoryImpl @Inject constructor(
     ) {
 
 
-        val messageIDKey = firebaseDatabase.reference.push().key
+        var messageIDKey = firebaseDatabase.reference.push().key
 
         val messageHashMap = HashMap<String, Any?>()
 
-        if (messageModel.messageID == "") {
-            messageHashMap["messageID"] = messageIDKey
-        } else {
-            messageHashMap["messageID"] = messageModel.messageID
+        if (messageModel.messageID != "") {
+            messageIDKey = messageModel.messageID
         }
+
+        messageHashMap["messageID"] = messageIDKey
         messageHashMap["messageText"] = messageModel.messageText
         messageHashMap["senderID"] = messageModel.senderID
         messageHashMap["receiverID"] = messageModel.receiverID
@@ -161,7 +161,7 @@ class DualMessageRepositoryImpl @Inject constructor(
 
         val storageReference = firebaseStorage.reference.child("Chat Images")
 
-        val messageID = firebaseDatabase.reference.push().key
+        val messageID = FirebaseDatabase.getInstance().reference.push().key
         val filePath = storageReference.child("$messageID.jpg")
 
         var uploadTask: StorageTask<*>
@@ -177,14 +177,14 @@ class DualMessageRepositoryImpl @Inject constructor(
         }).addOnCompleteListener { imageTask ->
             if (imageTask.isSuccessful) {
                 val downloadUrl = imageTask.result
-                val url = downloadUrl.toString()
+                val pictureUrl = downloadUrl.toString()
                 val pictureMessageModel = MessageModel(
                     messageID = messageID.toString(),
                     messageText = IF_PICTURE_MESSAGE_TEXT,
                     senderID = storage.firebaseID,
                     receiverID = receiverUser.uid,
                     sendDate = getCurrentDateTime(),
-                    imageMessageURL = url,
+                    imageMessageURL = pictureUrl,
                     isSeen = false
                 )
                 sendMessage(
@@ -194,11 +194,12 @@ class DualMessageRepositoryImpl @Inject constructor(
                     if (sendMessageTask) {
                         isSentPictureCallback.invoke(pictureMessageModel.imageMessageURL)
                     } else {
-                        isSentPictureCallback.invoke("none error url")
+                        isSentPictureCallback.invoke("none error-send url")
                     }
                 }
             } else {
-                isSentPictureCallback.invoke("none error url")
+                var s = "error storage. imageUri = $fileUri "
+                isSentPictureCallback.invoke(s)
             }
 
         }
