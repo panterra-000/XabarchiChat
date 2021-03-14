@@ -173,7 +173,20 @@ class DualMessageRepositoryImpl @Inject constructor(
                 val url = downloadUrl.toString()
                 messageModel.imageMessageURL = url
 
+                sendMessage(
+                    messageModel = messageModel,
+                    receiverUser = receiverUser
+                ) { sendMessageTask ->
+                    if (sendMessageTask) {
+                        isSentPictureCallback.invoke(true)
+                    } else {
+                        isSentPictureCallback.invoke(false)
+                    }
+                }
+            } else {
+                isSentPictureCallback.invoke(false)
             }
+
         }
     }
 
