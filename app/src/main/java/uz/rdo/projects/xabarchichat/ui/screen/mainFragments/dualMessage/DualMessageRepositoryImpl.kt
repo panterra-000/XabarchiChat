@@ -16,6 +16,7 @@ import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.data.repositories.DualMessageRepository
+import uz.rdo.projects.xabarchichat.utils.IF_PICTURE_MESSAGE_TEXT
 import uz.rdo.projects.xabarchichat.utils.STATUS_PERSONAL
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import javax.inject.Inject
@@ -82,10 +83,16 @@ class DualMessageRepositoryImpl @Inject constructor(
         isSentMessageCallback: SingleBlock<Boolean>
     ) {
 
+
         val messageIDKey = firebaseDatabase.reference.push().key
 
         val messageHashMap = HashMap<String, Any?>()
-        messageHashMap["messageID"] = messageIDKey
+
+        if (messageModel.messageID == "") {
+            messageHashMap["messageID"] = messageIDKey
+        } else {
+            messageHashMap["messageID"] = messageModel.messageID
+        }
         messageHashMap["messageText"] = messageModel.messageText
         messageHashMap["senderID"] = messageModel.senderID
         messageHashMap["receiverID"] = messageModel.receiverID
@@ -149,7 +156,7 @@ class DualMessageRepositoryImpl @Inject constructor(
         fileUri: Uri,
         messageModel: MessageModel,
         receiverUser: User,
-        isSentPictureCallback: SingleBlock<Boolean>
+        isSentPictureCallback: SingleBlock<String>
     ) {
 
         val storageReference = firebaseStorage.reference.child("Chat Images")
@@ -171,25 +178,31 @@ class DualMessageRepositoryImpl @Inject constructor(
             if (imageTask.isSuccessful) {
                 val downloadUrl = imageTask.result
                 val url = downloadUrl.toString()
-                messageModel.imageMessageURL = url
-
+                val pictureMessageModel = MessageModel(
+                    messageID = messageID.toString(),
+                    messageText = IF_PICTURE_MESSAGE_TEXT,
+                    senderID = messageModel.senderID,
+                    receiverID = messageModel.receiverID,
+                    sendDate = messageModel.sendDate,
+                    imageMessageURL = url,
+                    isSeen = false
+                )
                 sendMessage(
-                    messageModel = messageModel,
+                    messageModel = pictureMessageModel,
                     receiverUser = receiverUser
                 ) { sendMessageTask ->
                     if (sendMessageTask) {
-                        isSentPictureCallback.invoke(true)
+                        isSentPictureCallback.invoke(pictureMessageModel.imageMessageURL)
                     } else {
-                        isSentPictureCallback.invoke(false)
+                        isSentPictureCallback.invoke("none error url")
                     }
                 }
             } else {
-                isSentPictureCallback.invoke(false)
+                isSentPictureCallback.invoke("none error url")
             }
 
         }
     }
-
 
     override fun deleteMessage(
         messageModel: MessageModel,

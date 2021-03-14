@@ -6,7 +6,7 @@ data class MessageModel(
     val senderID: String = "",
     val receiverID: String = "",
     val sendDate: Long = 0L,
-    var imageMessageURL: String = "",
+    val imageMessageURL: String = "",
     var isSeen: Boolean = false
 ) {
     fun getIsSeen(): Boolean {

@@ -20,7 +20,7 @@ interface DualMessageRepository {
         fileUri: Uri,
         messageModel: MessageModel,
         receiverUser: User,
-        isSentPictureCallback: SingleBlock<Boolean>
+        isSentPictureCallback: SingleBlock<String>
     )
 
     fun deleteMessage(messageModel: MessageModel, isDeletedMessageCallback: SingleBlock<Boolean>)

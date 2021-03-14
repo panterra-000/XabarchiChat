@@ -1,6 +1,8 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,8 +62,13 @@ class DualMessageFragment : Fragment() {
         viewModel.firebaseUserData.observe(this, firebaseUserDataObserver)
         viewModel.allMessages.observe(this, allMessagesObserver)
         viewModel.isSendMessage.observe(this, isSendMessageObserver)
+        viewModel.sendPictureData.observe(this, sendPictureDataObserver)
+
     }
 
+    private val sendPictureDataObserver = Observer<Boolean> {
+
+    }
 
     private val firebaseUserDataObserver = Observer<User> { firebaseUser ->
         if (firebaseUser != null) {
@@ -73,6 +80,7 @@ class DualMessageFragment : Fragment() {
         adapter.submitMessages(messages)
         binding.rvMessage.scrollToPosition(adapter.itemCount - 1)
         viewModel.toBeSeenMessages(args.receiverContact)
+
     }
 
     private val isSendMessageObserver = Observer<Boolean> { isSend ->
@@ -130,6 +138,7 @@ class DualMessageFragment : Fragment() {
         }
     }
 
+
     override fun onStop() {
         super.onStop()
         viewModel.disconnect()
@@ -154,6 +163,12 @@ class DualMessageFragment : Fragment() {
                     }
                 }
             })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
     }
 
 

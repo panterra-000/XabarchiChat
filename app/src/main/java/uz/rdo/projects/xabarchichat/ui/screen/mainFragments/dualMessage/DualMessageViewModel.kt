@@ -1,5 +1,6 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
+import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,11 +19,15 @@ class DualMessageViewModel @ViewModelInject constructor(
     private val _isSendMessage = MutableLiveData<Boolean>()
     val isSendMessage: LiveData<Boolean> get() = _isSendMessage
 
+    private val _sendPictureData = MutableLiveData<String>()
+    val sendPictureData: LiveData<String> get() = _sendPictureData
+
     private val _firebaseUserData = MutableLiveData<User>()
     val firebaseUserData: LiveData<User> get() = _firebaseUserData
 
     private val _toBeSeenMessagesData = MutableLiveData<Boolean>()
     val toBeSeenMessageData: LiveData<Boolean> get() = _toBeSeenMessagesData
+
 
     fun getFirebaseUser() {
         repository.getFirebaseUser() { firebaseUser ->
@@ -57,5 +62,14 @@ class DualMessageViewModel @ViewModelInject constructor(
         _isSendMessage.value = null
     }
 
+    fun sendPicture(uri: Uri, messageModel: MessageModel, receiverUser: User) {
+        repository.sendPicture(
+            fileUri = uri,
+            messageModel = messageModel,
+            receiverUser = receiverUser,
+        ) { isSendPicture ->
+            _sendPictureData.value = isSendPicture
+        }
+    }
 
 }
