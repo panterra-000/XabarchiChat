@@ -83,7 +83,7 @@ class DualMessageRepositoryImpl @Inject constructor(
         messageHashMap["receiverID"] = messageModel.receiverID
         messageHashMap["sendDate"] = messageModel.sendDate
         messageHashMap["imageMessageURL"] = messageModel.imageMessageURL
-        messageHashMap["isSeen"] = false
+        messageHashMap["isSeen"] = messageModel.isSeen
 
         firebaseDatabase.reference.child("MessageList").child(messageModel.senderID)
             .child(messageModel.receiverID)
@@ -103,7 +103,7 @@ class DualMessageRepositoryImpl @Inject constructor(
                                 chatHashMap["chatStatus"] = STATUS_PERSONAL
                                 chatHashMap["senderUser"] = myFirebaseUser
                                 chatHashMap["receiverUser"] = receiverUser
-                                chatHashMap["messageModel"] = messageModel
+                                chatHashMap["messageModel"] = messageHashMap
 
                                 firebaseDatabase.reference.child("AllChatList")
                                     .child(storage.firebaseID).child(receiverUser.uid)
@@ -115,7 +115,7 @@ class DualMessageRepositoryImpl @Inject constructor(
                                             chatSecondHashMap["chatStatus"] = STATUS_PERSONAL
                                             chatSecondHashMap["receiverUser"] = myFirebaseUser
                                             chatSecondHashMap["senderUser"] = receiverUser
-                                            chatSecondHashMap["messageModel"] = messageModel
+                                            chatSecondHashMap["messageModel"] = messageHashMap
 
                                             firebaseDatabase.reference.child("AllChatList")
                                                 .child(receiverUser.uid).child(storage.firebaseID)
@@ -192,7 +192,46 @@ class DualMessageRepositoryImpl @Inject constructor(
                         }
                     }
 
-                   // val refLastMessage = firebaseDatabase.reference.child("AllChatList").
+
+                    val refLastMessage =
+                        firebaseDatabase.reference.child("AllChatList").child(storage.firebaseID)
+                            .child(receiverUser.uid).child("messageModel")
+
+                    val refLastMessagePartner =
+                        firebaseDatabase.reference.child("AllChatList").child(receiverUser.uid)
+                            .child(storage.firebaseID).child("messageModel")
+
+                    val lastMessageIsSeenValueEventListener =
+                        refLastMessage.addValueEventListener(object : ValueEventListener {
+                            var lastMessageTaskDone = false
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.exists() && !lastMessageTaskDone) {
+                                    val messageModel = snapshot.getValue(MessageModel::class.java)
+                                    if (messageModel != null) {
+                                        if (messageModel.senderID == receiverUser.uid) {
+                                            refLastMessage.child("isSeen").setValue(true)
+                                                .addOnCompleteListener { changeToSeen ->
+                                                    if (changeToSeen.isSuccessful) {
+                                                        refLastMessagePartner.child("isSeen")
+                                                            .setValue(true)
+                                                            .addOnCompleteListener { lastMessageSeenPartner ->
+                                                                if (!lastMessageSeenPartner.isSuccessful) {
+                                                                    allMessagesUpdate = false
+                                                                }
+                                                            }
+                                                    }
+                                                }
+                                        }
+                                    }
+                                    lastMessageTaskDone = true
+                                }
+                            }
+                        })
 
                     taskDone = true
                     toBeSeenCallback.invoke(allMessagesUpdate)
