@@ -1,10 +1,17 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 
+import android.net.Uri
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
@@ -16,6 +23,7 @@ import javax.inject.Inject
 class DualMessageRepositoryImpl @Inject constructor(
     private val firebaseDatabase: FirebaseDatabase,
     private val firebaseAuth: FirebaseAuth,
+    private val firebaseStorage: FirebaseStorage,
     private val storage: LocalStorage
 ) : DualMessageRepository {
 
@@ -137,11 +145,43 @@ class DualMessageRepositoryImpl @Inject constructor(
             }
     }
 
+    override fun sendPicture(
+        fileUri: Uri,
+        messageModel: MessageModel,
+        receiverUser: User,
+        isSentPictureCallback: SingleBlock<Boolean>
+    ) {
+
+        val storageReference = firebaseStorage.reference.child("Chat Images")
+
+        val messageID = firebaseDatabase.reference.push().key
+        val filePath = storageReference.child("$messageID.jpg")
+
+        var uploadTask: StorageTask<*>
+        uploadTask = filePath.putFile(fileUri)
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            return@Continuation filePath.downloadUrl
+
+        }).addOnCompleteListener { imageTask ->
+            if (imageTask.isSuccessful) {
+                val downloadUrl = imageTask.result
+                val url = downloadUrl.toString()
+                messageModel.imageMessageURL = url
+
+            }
+        }
+    }
+
+
     override fun deleteMessage(
         messageModel: MessageModel,
         isDeletedMessageCallback: SingleBlock<Boolean>
     ) {
-        TODO("Not yet implemented")
     }
 
 
@@ -194,7 +234,8 @@ class DualMessageRepositoryImpl @Inject constructor(
 
 
                     val refLastMessage =
-                        firebaseDatabase.reference.child("AllChatList").child(storage.firebaseID)
+                        firebaseDatabase.reference.child("AllChatList")
+                            .child(storage.firebaseID)
                             .child(receiverUser.uid).child("messageModel")
 
                     val refLastMessagePartner =
@@ -211,7 +252,8 @@ class DualMessageRepositoryImpl @Inject constructor(
 
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if (snapshot.exists() && !lastMessageTaskDone) {
-                                    val messageModel = snapshot.getValue(MessageModel::class.java)
+                                    val messageModel =
+                                        snapshot.getValue(MessageModel::class.java)
                                     if (messageModel != null) {
                                         if (messageModel.senderID == receiverUser.uid) {
                                             refLastMessage.child("isSeen").setValue(true)

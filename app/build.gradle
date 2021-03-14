@@ -38,7 +38,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    viewBinding{
+    viewBinding {
         enabled = true
     }
 
@@ -63,12 +63,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.3'
 
-
-    /** Firebase Database **/
-    implementation 'com.google.firebase:firebase-database-ktx:19.6.0'
-
-    /**Auth Firebase**/
+    /** Firebase **/
+    implementation 'com.google.firebase:firebase-core:18.0.2'
+    implementation 'com.google.firebase:firebase-database-ktx:19.7.0'
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-storage-ktx:19.2.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+
 
     /**
      * Kotlin Coroutines

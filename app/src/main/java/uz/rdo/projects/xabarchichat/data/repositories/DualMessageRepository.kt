@@ -1,5 +1,6 @@
 package uz.rdo.projects.xabarchichat.data.repositories
 
+import android.net.Uri
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
@@ -13,6 +14,13 @@ interface DualMessageRepository {
         messageModel: MessageModel,
         receiverUser: User,
         isSentMessageCallback: SingleBlock<Boolean>
+    )
+
+    fun sendPicture(
+        fileUri: Uri,
+        messageModel: MessageModel,
+        receiverUser: User,
+        isSentPictureCallback: SingleBlock<Boolean>
     )
 
     fun deleteMessage(messageModel: MessageModel, isDeletedMessageCallback: SingleBlock<Boolean>)
