@@ -100,23 +100,24 @@ class DualMessageRepositoryImpl @Inject constructor(
 
                                 val chatHashMap = HashMap<String, Any?>()
                                 chatHashMap["chatId"] = chatId
+                                chatHashMap["chatStatus"] = STATUS_PERSONAL
                                 chatHashMap["senderUser"] = myFirebaseUser
                                 chatHashMap["receiverUser"] = receiverUser
                                 chatHashMap["messageModel"] = messageModel
 
-                                firebaseDatabase.reference.child("PersonalChats")
+                                firebaseDatabase.reference.child("AllChatList")
                                     .child(storage.firebaseID).child(receiverUser.uid)
                                     .setValue(chatHashMap)
                                     .addOnCompleteListener {
                                         if (it.isSuccessful) {
-
                                             val chatSecondHashMap = HashMap<String, Any?>()
                                             chatSecondHashMap["chatId"] = chatId
+                                            chatSecondHashMap["chatStatus"] = STATUS_PERSONAL
                                             chatSecondHashMap["receiverUser"] = myFirebaseUser
                                             chatSecondHashMap["senderUser"] = receiverUser
                                             chatSecondHashMap["messageModel"] = messageModel
 
-                                            firebaseDatabase.reference.child("PersonalChats")
+                                            firebaseDatabase.reference.child("AllChatList")
                                                 .child(receiverUser.uid).child(storage.firebaseID)
                                                 .setValue(chatSecondHashMap)
                                                 .addOnCompleteListener { taskChat ->
@@ -190,6 +191,9 @@ class DualMessageRepositoryImpl @Inject constructor(
                             }
                         }
                     }
+
+                   // val refLastMessage = firebaseDatabase.reference.child("AllChatList").
+
                     taskDone = true
                     toBeSeenCallback.invoke(allMessagesUpdate)
                 }

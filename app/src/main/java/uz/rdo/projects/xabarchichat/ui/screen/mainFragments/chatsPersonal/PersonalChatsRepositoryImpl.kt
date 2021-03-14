@@ -1,5 +1,6 @@
 package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.chatsPersonal
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -8,6 +9,7 @@ import com.google.firebase.database.ValueEventListener
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.ChatModel
 import uz.rdo.projects.xabarchichat.data.repositories.PersonalChatsRepository
+import uz.rdo.projects.xabarchichat.utils.STATUS_PERSONAL
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import javax.inject.Inject
 
@@ -23,7 +25,7 @@ class PersonalChatsRepositoryImpl @Inject constructor(
 
 
 
-        firebaseDatabase.reference.child("PersonalChats").child(storage.firebaseID)
+        firebaseDatabase.reference.child("AllChatList").child(storage.firebaseID)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
@@ -35,7 +37,8 @@ class PersonalChatsRepositoryImpl @Inject constructor(
                         val pChat = pChatSnapshot.getValue(
                             ChatModel::class.java
                         )
-                        if (pChat != null) {
+                        if (pChat != null && pChat.chatStatus == STATUS_PERSONAL) {
+                            Log.d("717P","status : ${pChat.chatStatus}")
                             chats.add(pChat)
                         }
                     }
