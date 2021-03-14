@@ -20,6 +20,9 @@ class PersonalChatsRepositoryImpl @Inject constructor(
     override fun getPersonalChatList(personalChatsCallback: SingleBlock<List<ChatModel>>) {
 
         val chats = ArrayList<ChatModel>()
+
+
+
         firebaseDatabase.reference.child("PersonalChats").child(storage.firebaseID)
             .addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {

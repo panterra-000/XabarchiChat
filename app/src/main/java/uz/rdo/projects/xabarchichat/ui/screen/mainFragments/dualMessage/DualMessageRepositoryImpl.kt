@@ -9,6 +9,7 @@ import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.data.repositories.DualMessageRepository
+import uz.rdo.projects.xabarchichat.utils.STATUS_PERSONAL
 import uz.rdo.projects.xabarchichat.utils.SingleBlock
 import javax.inject.Inject
 
@@ -150,7 +151,8 @@ class DualMessageRepositoryImpl @Inject constructor(
         val id = storage.firebaseID
         val refMessages = firebaseDatabase.reference.child("MessageList")
         val refMyMessagesList = refMessages.child(id)
-        val refMessagesWithPartner = refMyMessagesList.child(receiverUser.uid).child("Messages")
+        val refMessagesWithPartner =
+            refMyMessagesList.child(receiverUser.uid).child("Messages")
         val refPartnerMessagesWithMe =
             refMessages.child(receiverUser.uid).child(id).child("Messages")
 
@@ -165,15 +167,18 @@ class DualMessageRepositoryImpl @Inject constructor(
                 if (snapshot.exists() && !taskDone) {
                     var allMessagesUpdate = true
                     for (messageData in snapshot.children) {
-                        val messageModel = messageData.getValue(MessageModel::class.java)
+                        val messageModel =
+                            messageData.getValue(MessageModel::class.java)
                         if (messageModel != null) {
                             if (messageModel.senderID == receiverUser.uid) {
-                                refMessagesWithPartner.child(messageModel.messageID).child("isSeen")
+                                refMessagesWithPartner.child(messageModel.messageID)
+                                    .child("isSeen")
                                     .setValue(true).addOnCompleteListener { change ->
                                         if (change.isSuccessful) {
                                             refPartnerMessagesWithMe.child(messageModel.messageID)
                                                 .child("isSeen")
-                                                .setValue(true).addOnCompleteListener { change ->
+                                                .setValue(true)
+                                                .addOnCompleteListener { change ->
                                                     if (!change.isSuccessful) {
                                                         allMessagesUpdate = false
                                                     }
