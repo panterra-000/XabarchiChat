@@ -159,4 +159,16 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_send"
         app:layout_constraintStart_toEndOf="@+id/btn_attach_file" />
 
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:visibility="gone"
+        android:indeterminateTint="@color/main_dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

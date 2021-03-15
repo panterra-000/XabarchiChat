@@ -108,6 +108,7 @@
         android:layout_height="64dp"
         android:progressBackgroundTint="@color/main_blue"
         android:visibility="gone"
+        android:indeterminateTint="@color/main_dark_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
