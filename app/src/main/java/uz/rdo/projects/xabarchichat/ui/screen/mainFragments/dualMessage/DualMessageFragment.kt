@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -25,8 +26,10 @@ import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.DualChatAdapter
 import uz.rdo.projects.xabarchichat.utils.CHOOSER_REQUEST_CODE
+import uz.rdo.projects.xabarchichat.utils.extensions.hideView
 import uz.rdo.projects.xabarchichat.utils.extensions.pickImageChooserIntent
 import uz.rdo.projects.xabarchichat.utils.extensions.showToast
+import uz.rdo.projects.xabarchichat.utils.extensions.showView
 import uz.rdo.projects.xabarchichat.utils.time.getCurrentDateTime
 import javax.inject.Inject
 
@@ -72,6 +75,7 @@ class DualMessageFragment : Fragment() {
 
     private val sendPictureDataObserver = Observer<String> { sentPictureURL ->
         showToast(sentPictureURL)
+        binding.progressBar.hideView()
     }
 
     private val firebaseUserDataObserver = Observer<User> { firebaseUser ->
@@ -119,6 +123,10 @@ class DualMessageFragment : Fragment() {
             btnAttachFile.setOnClickListener {
                 pickImageChooserIntent(CHOOSER_REQUEST_CODE)
             }
+
+            btnPrev.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -149,6 +157,8 @@ class DualMessageFragment : Fragment() {
                 uri = data.data!!,
                 receiverUser = args.receiverContact
             )
+
+            binding.progressBar.showView()
 
         }
     }
