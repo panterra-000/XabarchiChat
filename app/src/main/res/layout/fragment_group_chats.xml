@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:textSize="40sp"
         android:gravity="center"
-        android:text="@string/groups"
+        android:text="@string/group"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

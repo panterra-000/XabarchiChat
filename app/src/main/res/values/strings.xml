@@ -13,11 +13,10 @@
     <string name="edit">Edit</string>
 
     <string name="all">All</string>
-    <string name="personals">Personal</string>
+    <string name="personal">Personal</string>
     <string name="search_in_chats">search in chats</string>
     <string name="all_chats">All chats</string>
     <string name="group">Group</string>
-    <string name="personal">Personal</string>
     <string name="search">search</string>
     <string name="find_people_near">Find people nearby</string>
     <string name="to_invite_person">Invite Friends</string>

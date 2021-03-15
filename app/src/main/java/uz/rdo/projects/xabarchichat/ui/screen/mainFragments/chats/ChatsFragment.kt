@@ -43,15 +43,14 @@ class ChatsFragment : Fragment() {
                     tab.setText(R.string.all_chats)
                 }
                 1 -> {
-                    tab.setText(R.string.personals)
+                    tab.setText(R.string.personal)
                 }
                 2 -> {
-                    tab.setText(R.string.groups)
+                    tab.setText(R.string.group)
                 }
             }
         }.attach()
     }
-
 
     private val pageChangeCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
