@@ -3,6 +3,7 @@ package uz.rdo.projects.xabarchichat.ui.screen.mainFragments.dualMessage
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.media.MediaRecorder
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -39,6 +40,8 @@ class DualMessageFragment : Fragment() {
     lateinit var binding: FragmentDualMessageBinding
     lateinit var adapter: DualChatAdapter
 
+    lateinit var mediaRecorder: MediaRecorder
+    
 
     @Inject
     lateinit var storage: LocalStorage
@@ -70,7 +73,6 @@ class DualMessageFragment : Fragment() {
         viewModel.allMessages.observe(this, allMessagesObserver)
         viewModel.isSendMessage.observe(this, isSendMessageObserver)
         viewModel.sendPictureData.observe(this, sendPictureDataObserver)
-
     }
 
     private val sendPictureDataObserver = Observer<String> { sentPictureURL ->
