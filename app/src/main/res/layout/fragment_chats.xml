@@ -102,9 +102,16 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/groups" />
+            android:text="@string/group" />
 
     </com.google.android.material.tabs.TabLayout>
+    <View
+        android:id="@+id/line_bottom_tab"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/main_green"
+        />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_chats"
@@ -112,7 +119,7 @@
         android:layout_height="0dp"
         android:background="@color/main_light_grey"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/line_bottom_tab" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
