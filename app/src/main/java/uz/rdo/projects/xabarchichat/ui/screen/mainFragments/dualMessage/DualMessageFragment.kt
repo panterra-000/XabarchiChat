@@ -4,8 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.media.MediaRecorder
-import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,22 +16,14 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
-import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
 import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.DualChatAdapter
 import uz.rdo.projects.xabarchichat.utils.CHOOSER_REQUEST_CODE
-import uz.rdo.projects.xabarchichat.utils.extensions.hideView
-import uz.rdo.projects.xabarchichat.utils.extensions.pickImageChooserIntent
-import uz.rdo.projects.xabarchichat.utils.extensions.showToast
-import uz.rdo.projects.xabarchichat.utils.extensions.showView
+import uz.rdo.projects.xabarchichat.utils.extensions.*
 import uz.rdo.projects.xabarchichat.utils.time.getCurrentDateTime
 import javax.inject.Inject
 
@@ -41,7 +34,7 @@ class DualMessageFragment : Fragment() {
     lateinit var adapter: DualChatAdapter
 
     lateinit var mediaRecorder: MediaRecorder
-    
+
 
     @Inject
     lateinit var storage: LocalStorage
@@ -117,7 +110,10 @@ class DualMessageFragment : Fragment() {
     }
 
     private fun setButtonClicks() {
+
+
         binding.apply {
+
             btnSend.setOnClickListener {
                 sendMessage()
             }
@@ -129,6 +125,37 @@ class DualMessageFragment : Fragment() {
             btnPrev.setOnClickListener {
                 findNavController().popBackStack()
             }
+
+            etMessage.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(s: Editable?) {
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s.toString().trim() == "") {
+                        isSendTextMessage(false)
+                    } else {
+                        isSendTextMessage(true)
+                    }
+                }
+            })
+        }
+    }
+
+    private fun isSendTextMessage(btnSendMessageVisibility: Boolean) {
+        if (btnSendMessageVisibility) {
+            binding.btnSend.showView()
+            binding.btnRecordAudio.hideView()
+        } else {
+            binding.btnSend.inVisibleView()
+            binding.btnRecordAudio.showView()
         }
     }
 
