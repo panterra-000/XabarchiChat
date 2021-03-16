@@ -151,7 +151,7 @@
         android:focusable="true"
         android:foreground="?selectableItemBackground"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_baseline_mic_none_24"
+        android:src="@drawable/ic_mic"
         app:layout_constraintBottom_toBottomOf="@+id/btn_send"
         app:layout_constraintEnd_toEndOf="@+id/btn_send"
         app:layout_constraintStart_toStartOf="@+id/btn_send"

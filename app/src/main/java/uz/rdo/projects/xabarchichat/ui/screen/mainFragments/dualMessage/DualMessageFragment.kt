@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import uz.rdo.projects.xabarchichat.R
 import uz.rdo.projects.xabarchichat.data.localStorage.LocalStorage
 import uz.rdo.projects.xabarchichat.data.models.MessageModel
 import uz.rdo.projects.xabarchichat.data.models.User
@@ -109,6 +111,7 @@ class DualMessageFragment : Fragment() {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun setButtonClicks() {
 
 
@@ -124,6 +127,19 @@ class DualMessageFragment : Fragment() {
 
             btnPrev.setOnClickListener {
                 findNavController().popBackStack()
+            }
+
+            btnRecordAudio.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        btnRecordAudio.setImageResource(R.drawable.ic_mic_open)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        btnRecordAudio.setImageResource(R.drawable.ic_mic)
+                    }
+                }
+
+                true
             }
 
             etMessage.addTextChangedListener(object : TextWatcher {
@@ -176,7 +192,6 @@ class DualMessageFragment : Fragment() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -191,5 +206,4 @@ class DualMessageFragment : Fragment() {
 
         }
     }
-
 }
