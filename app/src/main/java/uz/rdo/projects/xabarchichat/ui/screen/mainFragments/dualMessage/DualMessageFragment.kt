@@ -132,6 +132,10 @@ class DualMessageFragment : Fragment() {
                 cvCreatedAudio.hideView()
             }
 
+            btnSendAudio.setOnClickListener {
+                cvCreatedAudio.hideView()
+            }
+
             btnRecordAudio.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
