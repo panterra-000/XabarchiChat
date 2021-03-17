@@ -115,8 +115,8 @@
 
     <ImageView
         android:id="@+id/btn_attach_file"
-        android:layout_width="32dp"
-        android:layout_height="36dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="10dp"
         android:layout_marginBottom="7dp"
         android:clickable="true"
@@ -176,6 +176,53 @@
         app:layout_constraintEnd_toStartOf="@+id/btn_send"
         app:layout_constraintStart_toEndOf="@+id/btn_attach_file" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_created_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:backgroundTint="@color/main_light_blue"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rv_message">
+
+        <LinearLayout
+            android:id="@+id/ll_created_audio"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="0dp"
+                android:max="100"
+                android:progress="10"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/btn_play_audio"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_margin="2dp"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/ic_play" />
+
+            <ImageView
+                android:id="@+id/btn_send_audio"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="4dp"
+                android:clickable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/ic_send_icon"
+                app:tint="@color/white" />
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <ProgressBar
         android:id="@+id/progress_bar"
