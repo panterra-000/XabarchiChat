@@ -37,7 +37,6 @@ class DualMessageFragment : Fragment() {
 
     lateinit var mediaRecorder: MediaRecorder
 
-
     @Inject
     lateinit var storage: LocalStorage
 
