@@ -128,6 +128,10 @@ class DualMessageFragment : Fragment() {
                 findNavController().popBackStack()
             }
 
+            btnCancelSendAudio.setOnClickListener {
+                cvCreatedAudio.hideView()
+            }
+
             btnRecordAudio.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
@@ -135,6 +139,7 @@ class DualMessageFragment : Fragment() {
                     }
                     MotionEvent.ACTION_UP -> {
                         btnRecordAudio.setImageResource(R.drawable.ic_mic)
+                        cvCreatedAudio.showView()
                     }
                 }
 
