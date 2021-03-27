@@ -22,6 +22,10 @@ class DualMessageViewModel @ViewModelInject constructor(
     private val _sendPictureData = MutableLiveData<String>()
     val sendPictureData: LiveData<String> get() = _sendPictureData
 
+    private val _sendSoundData = MutableLiveData<String>()
+    val sendSoundData: LiveData<String> get() = _sendSoundData
+
+
     private val _firebaseUserData = MutableLiveData<User>()
     val firebaseUserData: LiveData<User> get() = _firebaseUserData
 
@@ -62,6 +66,9 @@ class DualMessageViewModel @ViewModelInject constructor(
         ) { isSendPicture ->
             _sendPictureData.value = isSendPicture
         }
+    }
+
+    fun sendSound() {
     }
 
 }

@@ -261,7 +261,6 @@ class DualMessageRepositoryImpl @Inject constructor(
                         }
                     }
 
-
                     val refLastMessage =
                         firebaseDatabase.reference.child("AllChatList")
                             .child(storage.firebaseID)
