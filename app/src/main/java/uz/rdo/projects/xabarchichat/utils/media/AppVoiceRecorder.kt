@@ -28,9 +28,9 @@ class AppVoiceRecorder {
 
         private fun prepareMediaRecorder() {
             mMediaRecorder.reset()
-            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT)
-            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
-            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT)
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             mMediaRecorder.setOutputFile(mFile.absolutePath)
             mMediaRecorder.prepare()
 
@@ -38,6 +38,7 @@ class AppVoiceRecorder {
 
         private fun createFileForRecord() {
             mFile = File(APP_ACTIVITY.filesDir, mMessageKey)
+            showToast(APP_ACTIVITY.filesDir.absolutePath)
             mFile.createNewFile()
         }
 

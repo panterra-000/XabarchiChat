@@ -26,6 +26,7 @@ import uz.rdo.projects.xabarchichat.databinding.FragmentDualMessageBinding
 import uz.rdo.projects.xabarchichat.ui.adapters.recycler.DualChatAdapter
 import uz.rdo.projects.xabarchichat.utils.CHOOSER_REQUEST_CODE
 import uz.rdo.projects.xabarchichat.utils.extensions.*
+import uz.rdo.projects.xabarchichat.utils.media.AppVoiceRecorder
 import uz.rdo.projects.xabarchichat.utils.time.getCurrentDateTime
 import javax.inject.Inject
 
@@ -139,11 +140,16 @@ class DualMessageFragment : Fragment() {
             btnRecordAudio.setOnTouchListener { v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
+                        AppVoiceRecorder.startRecord(viewModel.getMessageKey())
                         btnRecordAudio.setImageResource(R.drawable.ic_mic_open)
                     }
                     MotionEvent.ACTION_UP -> {
                         btnRecordAudio.setImageResource(R.drawable.ic_mic)
                         cvCreatedAudio.showView()
+                        AppVoiceRecorder.stopRecord(){file, messageKey ->
+                                showToast(file.absolutePath)
+                            etMessage.setText(file.absolutePath)
+                        }
                     }
                 }
 
@@ -214,4 +220,11 @@ class DualMessageFragment : Fragment() {
 
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        AppVoiceRecorder.releaseRecorder()
+    }
+
+
 }

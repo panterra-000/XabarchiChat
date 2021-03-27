@@ -309,7 +309,10 @@ class DualMessageRepositoryImpl @Inject constructor(
             }
         })
 
+    }
 
+    override fun getMessageKey(): String {
+        return firebaseDatabase.reference.push().key.toString()
     }
 
 }

@@ -26,4 +26,5 @@ interface DualMessageRepository {
 
     fun messagesToBeSeenUpload(receiverUser: User, toBeSeenCallback: SingleBlock<Boolean>)
 
+    fun getMessageKey():String
 }

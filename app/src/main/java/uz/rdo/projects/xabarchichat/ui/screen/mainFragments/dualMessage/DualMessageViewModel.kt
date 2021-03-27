@@ -25,6 +25,8 @@ class DualMessageViewModel @ViewModelInject constructor(
     private val _sendSoundData = MutableLiveData<String>()
     val sendSoundData: LiveData<String> get() = _sendSoundData
 
+    private val _messageKeyData = MutableLiveData<String>()
+    val messageKeyData: LiveData<String> get() = _messageKeyData
 
     private val _firebaseUserData = MutableLiveData<User>()
     val firebaseUserData: LiveData<User> get() = _firebaseUserData
@@ -70,5 +72,11 @@ class DualMessageViewModel @ViewModelInject constructor(
 
     fun sendSound() {
     }
+
+    fun getMessageKey(): String {
+        return repository.getMessageKey()
+    }
+
+
 
 }
