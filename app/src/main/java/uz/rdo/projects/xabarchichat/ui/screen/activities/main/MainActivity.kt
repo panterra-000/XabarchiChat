@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import uz.rdo.projects.xabarchichat.databinding.ActivityMainBinding
 import uz.rdo.projects.xabarchichat.R
+import uz.rdo.projects.xabarchichat.utils.APP_ACTIVITY
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,6 +25,13 @@ class MainActivity : AppCompatActivity() {
     private fun loadViews() {
         val navController = findNavController(R.id.navHostMainFragment)
         binding.bottomMenuNav.setupWithNavController(navController)
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        APP_ACTIVITY = this
     }
 
 
