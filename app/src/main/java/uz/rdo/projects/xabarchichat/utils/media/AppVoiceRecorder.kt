@@ -23,7 +23,6 @@ class AppVoiceRecorder {
             } catch (e: Exception) {
                 showToast(e.message.toString())
             }
-
         }
 
         private fun prepareMediaRecorder() {
@@ -33,11 +32,10 @@ class AppVoiceRecorder {
             mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             mMediaRecorder.setOutputFile(mFile.absolutePath)
             mMediaRecorder.prepare()
-
         }
 
         private fun createFileForRecord() {
-            mFile = File(APP_ACTIVITY.filesDir, mMessageKey)
+            mFile = File(APP_ACTIVITY.filesDir, "${mMessageKey}.3gp")
             showToast(APP_ACTIVITY.filesDir.absolutePath)
             mFile.createNewFile()
         }
@@ -49,7 +47,6 @@ class AppVoiceRecorder {
             } catch (e: Exception) {
                 showToast(e.message.toString())
             }
-
         }
 
         fun releaseRecorder() {
@@ -59,7 +56,5 @@ class AppVoiceRecorder {
                 showToast(e.message.toString())
             }
         }
-
-
     }
 }

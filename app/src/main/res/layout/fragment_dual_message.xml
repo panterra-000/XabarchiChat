@@ -181,6 +181,7 @@
         android:layout_margin="10dp"
         android:backgroundTint="@color/main_light_blue"
         android:clickable="true"
+        android:focusable="true"
         android:visibility="gone"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/rv_message">
@@ -194,6 +195,36 @@
             android:paddingStart="10dp"
             android:paddingEnd="10dp">
 
+            <ImageView
+                android:id="@+id/btn_play_audio"
+                android:layout_width="24dp"
+                android:layout_height="28dp"
+                android:layout_margin="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/ic_play" />
+
+            <ImageView
+                android:id="@+id/btn_pause_audio"
+                android:layout_width="24dp"
+                android:layout_height="28dp"
+                android:layout_margin="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/ic_pause" />
+
+            <ImageView
+                android:id="@+id/btn_stop_audio"
+                android:layout_width="24dp"
+                android:layout_height="28dp"
+                android:layout_margin="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?selectableItemBackground"
+                android:src="@drawable/ic_stop" />
+
             <SeekBar
                 android:id="@+id/sb_audio"
                 android:layout_width="0dp"
@@ -204,14 +235,6 @@
                 android:progressTint="@color/white"
                 android:thumbTint="@color/white" />
 
-            <ImageView
-                android:id="@+id/btn_play_audio"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_margin="2dp"
-                android:clickable="true"
-                android:foreground="?selectableItemBackground"
-                android:src="@drawable/ic_play" />
 
             <ImageView
                 android:id="@+id/btn_cancel_send_audio"
@@ -224,10 +247,10 @@
                 app:tint="@color/white" />
 
             <ImageView
-                android:layout_marginStart="4dp"
                 android:id="@+id/btn_send_audio"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:layout_marginStart="4dp"
                 android:src="@drawable/ic_send_icon"
                 app:tint="@color/white" />
 
