@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "726620560964",
-    "project_id": "xabarchichat",
-    "storage_bucket": "xabarchichat.appspot.com"
+    "project_number": "379727482939",
+    "project_id": "xabarchichat001",
+    "storage_bucket": "xabarchichat001.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:726620560964:android:885ecc086ddfc4bb802611",
+        "mobilesdk_app_id": "1:379727482939:android:189f0c6c29e8ca03840c1e",
         "android_client_info": {
           "package_name": "uz.rdo.projects.xabarchichat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "726620560964-djrjg4t801i85dr131qoab80q7p8gihv.apps.googleusercontent.com",
+          "client_id": "379727482939-p9ti22mitv1istk6mhqmfpdicii3j3ns.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDTTl3tg3p5OALNH6hIX7tHyQx8Fs1_38Y"
+          "current_key": "AIzaSyCi1uyYAhmPFdMa2VfkjG-_UqXy700DCCA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "726620560964-djrjg4t801i85dr131qoab80q7p8gihv.apps.googleusercontent.com",
+              "client_id": "379727482939-p9ti22mitv1istk6mhqmfpdicii3j3ns.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
